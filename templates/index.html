@@ -2,7 +2,7 @@
 <html>
 {% extends 'base.html' %}
 {% block main %}
-<link rel="stylesheet" href="/static/main.css">
+<link rel="stylesheet" href="/static/index.css">
 <div class = "indexblocks">
 
     <img src="/static/index.jpeg">
@@ -10,7 +10,8 @@
     <div class="right-block">
         <h2>How this Webapp works:</h2>
         <p>This webapp will allow the user to input a .txt file containing the potential drug compounds, then uses a pre-trained machine learning model to predict the pIC50 inhibition value of the compounds on the protein. The results will be stored in a .csv file and downloadable.</p>
-        <h3>What is pIC50 value:</h3>
+        <br>
+        <h3>• What is pIC50 value</h3>
         <p class="p2">Half maximal inhibitory concentration (IC50) is a measure of the potency of a subtance inhibiting a specific biological or biochemical function. It measures the concentration of the substance needed to inhibit the protein by 50%. pIC50 value is the negative log of IC50 and is typically a better indicator than IC50. A higher pIC50 value indicates a stronger inhibition interaction.</p>
     </div>
 </div>
