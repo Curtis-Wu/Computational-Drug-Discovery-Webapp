@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="/static/base.css">
     <title>Computational Drug Discovery</title>
+    <div class = "header-block">
+        <div class = "empty-block"></div>
+        <div class="header-block-text">
+            <h1 class="title">Computational Drug Discovery Webapp</h1>
+            <p class="subtitle">pIC50 Value Predictor</p>
+        </div>
+    </div>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Acetylcholinesterase</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/acetylcholinesterase/">Acetylcholinesterase</a></li>
+                <li><a href="#"></a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <!-- Content of the specific page will go here -->
-    </main>
+    {% block main %}
+    {% endblock %}
     <footer>
         <!-- Footer content goes here -->
     </footer>

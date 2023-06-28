@@ -1,43 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link rel="stylesheet" href="static/main.css">
-    <title>Computational Drug Discovery</title>
-    <div class="header-block">
-        <h1 class="title">Computational Drug Discovery Webapp</h1>
-        <p class="subtitle">pIC50 Value Predictor</p>
-    </div>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#">Acetylcholinesterase</a></li>
-                <li><a href="#"></a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <div class="empty-block"></div>
+{% extends 'base.html' %}
+{% block main %}
+<link rel="stylesheet" href="/static/main.css">
+<div class = "indexblocks">
 
-        <!-- <p>
-            This webapp allows the user to upload a .txt file containing the CHEMBL ids of the potential drug compounds. This webapp will then compute the bioactivity pIC50 values of the compounds and output them in a table using a pre-trained machine learning model.
-        </p> -->
-        <div class="left-block">
-            <h2>Left Block</h2>
-            <p>This is the left paragraph block.</p>
-            <p>It can contain any content you want.</p>
-          </div>
-          
-          <div class="right-block">
-            <h2>Right Block</h2>
-            <p>This is the right paragraph block.</p>
-            <p>It can also contain any content you want.</p>
-          </div>
-    </main>
-    <footer>
-        <!-- Footer content goes here -->
-    </footer>
-</body>
-</html>
+    <img src="/static/index.jpeg">
+
+    <div class="right-block">
+        <h2>How this Webapp works:</h2>
+        <p>This webapp will allow the user to input a .txt file containing the potential drug compounds, then uses a pre-trained machine learning model to predict the pIC50 inhibition value of the compounds on the protein. The results will be stored in a .csv file and downloadable.</p>
+        <h3>What is pIC50 value:</h3>
+        <p class="p2">Half maximal inhibitory concentration (IC50) is a measure of the potency of a subtance inhibiting a specific biological or biochemical function. It measures the concentration of the substance needed to inhibit the protein by 50%. pIC50 value is the negative log of IC50 and is typically a better indicator than IC50. A higher pIC50 value indicates a stronger inhibition interaction.</p>
+    </div>
+</div>
+{% endblock %}

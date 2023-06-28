@@ -10,6 +10,10 @@ app.app_context().push()
 def index():
     return render_template('index.html')
 
+@app.route('/acetylcholinesterase/')
+def acetylcho():
+    return render_template('acetylcho.html')
+
 
 if __name__=='__main__':
     app.run(debug=True)
