@@ -3,4 +3,29 @@
 {% extends 'base.html' %}
 
 {% block main %}
+    <link rel="stylesheet" href="/static/acetylcho.css">
+    <div class="center">
+
+        <div class = "left-block">
+            <div class="intro-block">
+                <h2>What is Acetylcholinesterase:</h2>
+                <p>This webapp will allow the user to input a .txt file containing the potential drug compounds, then uses a pre-trained machine learning model to predict the pIC50 inhibition value of the compounds on the protein. The results will be stored in a .csv file and downloadable.</p>
+            </div>
+
+            <div class = "upload-block">
+                <form method="POST" action="/acetylcholinesterase/" enctype="multipart/form-data">
+                    <input type="file" name="file">
+                    <button>Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class = "right-block">
+                sometext
+
+        </div>
+
+
+    </div>
+</html>
 {% endblock %}
