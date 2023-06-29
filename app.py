@@ -16,6 +16,8 @@ class Upload(db.Model):
     data = db.Column(db.String)
 
 def allowed_file(filename):
+    if len(filename)<=3:
+        return False
     return True if filename[-3:]=='txt' else False
 
 @app.route('/acetylcholinesterase/',methods = ['GET','POST'])
@@ -24,8 +26,8 @@ def acetylcho():
         file = request.files['file']
         if allowed_file(file.filename) == True:
             upload = Upload(filename = file.filename,data=file.read())
-            # db.session.add(upload)
-            # db.session.commit()
+            #db.session.add(upload)
+            #db.session.commit()
             return f'Uploaded'
         else:
             return 'failed'
