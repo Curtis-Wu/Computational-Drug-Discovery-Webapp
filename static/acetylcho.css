@@ -71,6 +71,7 @@ p{
 }
 .right-block{
     flex:1;
+    height: 500px;
     float: right; width: 50%
 }
 
