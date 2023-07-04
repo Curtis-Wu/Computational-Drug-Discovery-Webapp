@@ -13,9 +13,15 @@
             </div>
 
             <div class = "upload-block">
-                <form method="POST" action="/acetylcholinesterase/" enctype="multipart/form-data">
-                    <input type="file" name="file">
+                <form method="POST" action="/acetylcholinesterase/" enctype="multipart/form-data" id = "uploadForm">
+                    <input type="file" name="file" id = "fileInput">
                     <button>Submit</button>
+                    <p style="color: red;">
+                        {{ error_message }}
+                    </p>
+                    <p style="color: #0d45a5;">
+                        {{ success_message }}
+                    </p>
                 </form>
             </div>
         </div>

@@ -1,5 +1,6 @@
 from flask import Flask,render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
+from wtforms.validators import InputRequired
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -24,16 +25,13 @@ def allowed_file(filename):
 def acetylcho():
     if request.method == 'POST':
         file = request.files['file']
-        if allowed_file(file.filename) == True:
-            upload = Upload(filename = file.filename,data=file.read())
-            #db.session.add(upload)
-            #db.session.commit()
-            return f'Uploaded'
+        filename = file.filename
+        if file and allowed_file(filename):
+            return render_template('acetylcho.html',success_message = 'File successfully uploaded!')
         else:
-            return 'failed'
-    else:
-        return render_template('acetylcho.html')
-
+            error_message = 'Please upload a correct file(.txt)!'
+            return render_template('acetylcho.html', error_message=error_message)
+    return render_template('acetylcho.html',error_message='')
 
 
 if __name__=='__main__':
