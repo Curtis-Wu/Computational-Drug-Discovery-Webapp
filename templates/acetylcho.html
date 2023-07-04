@@ -8,7 +8,7 @@
 
         <div class = "left-block">
             <div class="intro-block">
-                <h2>What is Acetylcholinesterase:</h2>
+                <h2 style = "font-style: italic;">What is Acetylcholinesterase:</h2>
                 <p>This webapp will allow the user to input a .txt file containing the potential drug compounds, then uses a pre-trained machine learning model to predict the pIC50 inhibition value of the compounds on the protein. The results will be stored in a .csv file and downloadable.</p>
             </div>
 
@@ -16,12 +16,10 @@
                 <form method="POST" action="/acetylcholinesterase/" enctype="multipart/form-data" id = "uploadForm">
                     <input type="file" name="file" id = "fileInput">
                     <button>Submit</button>
-                    <p style="color: red;">
-                        {{ error_message }}
-                    </p>
-                    <p style="color: #0d45a5;">
-                        {{ success_message }}
-                    </p>
+                    <div class = "message-block">
+                        <div style="color: red;">{{ error_message }}</div>
+                        <div style="color: green;">{{ success_message }}</div>
+                    </div>
                 </form>
             </div>
         </div>

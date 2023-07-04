@@ -4,7 +4,6 @@
 }
 .right-block {
     margin-top: 0px;
-    font-style: italic;
     flex: 1;
     margin-left: 10px;
     margin-right: 60px;
@@ -13,17 +12,19 @@
 }
 
 h2{
-    font-size:30px;
+    font-size:28px;
+    font-style: italic;
 }
 
-h2{
-    font-size:26px;
+h3{
+    font-size:24px;
+    font-style: italic;
+}
+p{
+    font-size:24px;
+    line-height: 1.5;
 }
 .p2{
     font-size:20px;
 }
 
-p{
-    font-size:24px;
-    line-height: 1.5;
-}
