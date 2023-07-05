@@ -29,6 +29,7 @@ def model_predict(compounds_list):
     return df1
 
 if __name__ == '__main__':
+    # testing purpose
     my_str = "CHEMBL133897 CHEMBL336398 CHEMBL336398"
     my_list = list(my_str.split(' '))
     res = model_predict(my_list)
