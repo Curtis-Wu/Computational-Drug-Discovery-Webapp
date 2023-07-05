@@ -28,12 +28,15 @@ def acetylcho():
     if request.method == 'POST':
         file = request.files['file']
         filename = file.filename
-        if file and allowed_file(filename):
-            df = model_predict(file.read().decode("utf-8")).sort_values('Predicted IC50 value (nM)')
-            upload = Upload(filename=filename,data = df)
+        filecontent = file.read().decode("utf-8")
+        if file and allowed_file(filename) and filecontent:
+            df = model_predict(filecontent).sort_values('Predicted IC50 value (nM)')
+            upload = Upload(filename=filename,data = filecontent)
+            db.session.add(upload)
+            db.session.commit()
             return render_template('acetylcho.html',success_message = 'File successfully uploaded!',headings = list(df),data = df.values.tolist())
         else:
-            error_message = 'Please upload a correct file (.txt)!'
+            error_message = 'Please upload a nonempty correct file (.txt)!'
             return render_template('acetylcho.html', error_message=error_message)
     return render_template('acetylcho.html',error_message='')
 

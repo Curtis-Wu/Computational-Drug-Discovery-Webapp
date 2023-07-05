@@ -73,7 +73,6 @@ p{
 }
 .right-block{
     flex:1;
-    height: 500px;
     float: right; 
     /* width: 70% */
 }
@@ -84,7 +83,6 @@ p{
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-  margin-left: 30px;
 }
 
 .table_row:nth-child(odd){
