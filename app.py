@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,send_file
 from flask_sqlalchemy import SQLAlchemy
 from wtforms.validators import InputRequired
 import pandas as pd
@@ -34,11 +34,17 @@ def acetylcho():
             upload = Upload(filename=filename,data = filecontent)
             db.session.add(upload)
             db.session.commit()
-            return render_template('acetylcho.html',success_message = 'File successfully uploaded!',headings = list(df),data = df.values.tolist())
+            df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
+            return render_template('acetylcho.html',success_message = 'File successfully uploaded!',headings = list(df),data = df.values.tolist(),file_download = 'Download .csv file Here',id = upload.id)
         else:
-            error_message = 'Please upload a nonempty correct file (.txt)!'
+            error_message = 'Please upload a non-empty correct file (.txt)!'
             return render_template('acetylcho.html', error_message=error_message)
     return render_template('acetylcho.html',error_message='')
+
+@app.route('/download/<variable>/')
+def download_file(variable):
+    file = 'models/acetylcholinesterase/data/user_data_'+str(variable)+'.csv'
+    return send_file(file,as_attachment=True)
 
 
 if __name__=='__main__':

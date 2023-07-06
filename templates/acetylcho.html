@@ -19,6 +19,10 @@
                     <div class = "message-block">
                         <div style="color: red;">{{ error_message }}</div>
                         <div style="color: green;">{{ success_message }}</div>
+                        <br>
+                        <div style="color:#0d45a5;">
+                            <a href = "{{url_for('download_file',variable = id)}}">{{file_download}}</a>
+                        </div>
                     </div>
                 </form>
             </div>
