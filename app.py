@@ -28,6 +28,7 @@ def acetylcho():
     if request.method == 'POST':
         file = request.files['file']
         filename = file.filename
+        filename = file.filename
         filecontent = file.read().decode("utf-8")
         if file and allowed_file(filename) and filecontent:
             df = model_predict(filecontent).sort_values('Predicted IC50 value (nM)')
