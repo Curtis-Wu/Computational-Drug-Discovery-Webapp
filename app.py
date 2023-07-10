@@ -33,6 +33,8 @@ def acetylcho():
         if file and allowed_file(filename) and filecontent:
             df = model_predict(filecontent).sort_values('Predicted IC50 value (nM)')
             upload = Upload(filename=filename,data = filecontent)
+            upload = Upload(filename=filename,data = filecontent)
+
             db.session.add(upload)
             db.session.commit()
             df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
