@@ -35,6 +35,7 @@ def acetylcho():
             upload = Upload(filename=filename,data = filecontent)
             upload = Upload(filename=filename,data = filecontent)
             upload = Upload(filename=filename,data = filecontent)
+            upload = Upload(filename=filename,data = filecontent)
             db.session.add(upload)
             db.session.commit()
             df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
