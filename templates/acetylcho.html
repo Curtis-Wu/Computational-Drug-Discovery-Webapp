@@ -17,17 +17,17 @@
 
             <div class = "upload-block">
                 <form method="POST" action="/acetylcholinesterase/" enctype="multipart/form-data" id = "uploadForm">
-                    <input type="file" name="file" id = "fileInput">
-                    <button>Submit</button>
+                    <input type="file" name="file" id = "fileInput" onchange="handleFileUpload()">
+                    <button type="button" onclick="handleSubmit()">Submit</button>
+                </form>
                     <div class = "message-block">
-                        <div style="color: red;">{{ error_message }}</div>
-                        <div style="color: green;">{{ success_message }}</div>
+                        <div id = "success_message" style="color:green"></div>
+                        <div id = "failed_message" style="color:red"></div>
                         <br>
                         <div style="color:#0d45a5;">
                             <a href = "{{url_for('download_file',variable = id)}}">{{file_download}}</a>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
 
@@ -51,4 +51,44 @@
 
     </div>
 </html>
+
+<script>
+    function handleFileUpload() {
+        var fileInput = document.getElementById("fileInput");
+        var s_message = document.getElementById("success_message");
+        var f_message = document.getElementById("failed_message");
+        s_message.innerText = ""; // Clear the message when a new file is selected
+        f_message.innerText = "";
+      }
+
+    function handleSubmit() {
+        var fileInput = document.getElementById("fileInput");
+        var s_message = document.getElementById("success_message");
+        var f_message = document.getElementById("failed_message");
+        var filename = fileInput.files[0].name;
+        alert("Form submitted successfully!");
+        if (fileInput.files.length === 0) {
+            f_message.innerText = "Please select a file before submitting.";
+            return;
+          }
+
+        if (filename.length >= 4 && filename.substr(filename.length - 4)==='.txt') {
+            //f_message.innerText = "Please select a file before submitting.";
+            s_message.innerText = "File successfully uploaded!";
+            f_message.innerText = "";
+            return;
+        }
+        else{
+            s_message.innerText = "";
+            f_message.innerText = "Please upload a non-empty .txt file!";
+            return;
+        }
+        // Perform additional actions or submit the form here
+        // For example, you can use form.submit() to submit the form to a server
+        s_message.innerText = "File successfully uploaded!";
+        f_message.innerText = "";
+        return;
+    }
+  </script>
 {% endblock %}
+
