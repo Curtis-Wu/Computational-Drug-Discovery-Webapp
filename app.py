@@ -25,21 +25,17 @@ def allowed_file(filename):
 
 @app.route('/acetylcholinesterase/',methods = ['GET','POST'])
 def acetylcho():
-    # if request.method == 'POST':
-    #     file = request.files['file']
-    #     filename = file.filename
-    #     filecontent = file.read().decode("utf-8")
-
-    #     if file and allowed_file(filename) and filecontent:
-    #         df = model_predict(filecontent).sort_values('Predicted IC50 value (nM)')
-    #         upload = Upload(filename=filename,data = filecontent)
-    #         db.session.add(upload)
-    #         db.session.commit()
-    #         df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
-    #         return render_template('acetylcho.html',success_message = 'File successfully uploaded!',headings = list(df),data = df.values.tolist(),file_download = 'Download .csv file Here',id = upload.id)
-    #     else:
-    #         error_message = 'Please upload a non-empty correct file (.txt)!'
-    #         return render_template('acetylcho.html', error_message=error_message)
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = file.filename
+        if file and allowed_file(filename):
+            filecontent = file.read().decode("utf-8")
+            df = model_predict(filecontent).sort_values('Predicted IC50 value (nM)')
+            upload = Upload(filename=filename,data = filecontent)
+            db.session.add(upload)
+            db.session.commit()
+            df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
+            return render_template('acetylcho.html',headings = list(df),data = df.values.tolist(),file_download = 'Download .csv file Here',id = upload.id)
         
     return render_template('acetylcho.html')
 
@@ -48,6 +44,18 @@ def download_file(variable):
     file = 'models/acetylcholinesterase/data/user_data_'+str(variable)+'.csv'
     return send_file(file,as_attachment=True)
 
+@app.route('/upload/',methods = ['POST'])
+def upload_file():
+    # file = request.form['data']
+    # #file_content = file.read().decode('utf-8')
+    # print(type(file))
+    # print(file)
+    data = request.json
+    file_content = data.get('fileContent')
+    print(type(file_content))
+    print(file_content)
+
+    return "upload successful"
 
 if __name__=='__main__':
     app.run(debug=True)
