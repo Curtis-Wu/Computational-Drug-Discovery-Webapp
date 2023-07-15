@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <!-- Add any necessary CSS or script tags here -->
-</head>
+{% extends 'base.html' %}
+
+{% block main %}
+<link rel="stylesheet" href="/static/acetylcho.css">
 <body>
-    <div class="right-block">
+    <div>
         <table class="table">
             <tr class="table_row">
                 {% for header in headings %}
@@ -22,3 +23,5 @@
     </div>
 </body>
 </html>
+
+{% endblock %}
