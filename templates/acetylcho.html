@@ -72,7 +72,7 @@
 
         var filename = fileInput.files[0].name;
         if (filename.length >= 4 && filename.substr(filename.length - 4)==='.txt') {
-            s_message.innerText = "File successfully uploaded!";
+            s_message.innerText = "File successfully uploaded! Computing, Please wait...";
             f_message.innerText = "";
             var data = document.getElementById('fileInput').files[0];
             var fr = new FileReader();
@@ -95,9 +95,6 @@
         }
         // Perform additional actions or submit the form here
         // For example, you can use form.submit() to submit the form to a server
-        s_message.innerText = "File successfully uploaded!";
-        f_message.innerText = "";
-        return;
     }
 
     function sendFileContent(filename, fileContent) {
@@ -115,13 +112,11 @@
         })
         .then(function(response) {
             if (response.ok) {
-                return response.text();
+                // Redirect to the results page
+                window.location.href = '/results/';
+            } else {
+                throw new Error('Error: ' + response.status);
             }
-            throw new Error('Error: ' + response.status);
-        })
-        .then(function(responseText) {
-            console.log(responseText);
-            // Handle the response from the Flask server
         })
         .catch(function(error) {
             console.log('Error:', error.message);
