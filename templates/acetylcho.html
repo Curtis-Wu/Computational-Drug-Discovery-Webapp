@@ -79,7 +79,7 @@
             fr.onload = function(e) {
                 var fileContent = e.target.result;
                 console.log(fileContent);
-                sendFileContent(fileContent);
+                sendFileContent(filename,fileContent);
             };
             fr.readAsText(data);
             
@@ -100,13 +100,18 @@
         return;
     }
 
-    function sendFileContent(fileContent) {
+    function sendFileContent(filename, fileContent) {
+        var payload = {
+            filename: filename,
+            fileContent: fileContent
+        };
+    
         fetch('/upload/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ fileContent: fileContent })
+            body: JSON.stringify(payload)
         })
         .then(function(response) {
             if (response.ok) {

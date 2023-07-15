@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+{% extends 'base.html' %}
+
+{% block main %}
+<div class = "right-block">
+    <table class = "table">
+        <tr class = "table_row">
+            {% for header in headings %}
+            <th class = "table_cell">{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in data %}
+        <tr class = "table_row">
+            {% for cell in row %}
+            <td class = "table_cell"> {{ cell }} </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
