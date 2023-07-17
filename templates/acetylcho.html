@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/static/css/slick.css">
     <link rel="stylesheet" href="/static/css/slicknav.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/acetylcho.css">
 </head>
 
 <body>
@@ -87,7 +88,7 @@
     <div class="case_details_area">
         <div class="container">
             <div class="border_bottom">
-                    <div class="row ">
+                    <div class="row">
                             <div class="col-xl-12">
                                 <div class="details_title">
                                     <span>Alzheimer's Disease</span>
@@ -98,12 +99,19 @@
                                 <div class="details_main_wrap">
                                     <p class="details_info">
                                         Acetylcholinesterase posesses three binding sites where the inhibiting compounds could interact and it is an enzyme that terminates the actions of the neurotransmitter acetylcholine. Drug compounds could bind to acetylcholinesterase and intefere with the breakdown of actylcholine, causing disrupted neurotransmission. Acetylcholinesterase is the target protein for many different diseases such as Alzheimer's disease. 
-                                            <br>
-                                            <br>
-                                            <br>
-
                                     </p>
                                 </div>
+                            </div>
+                            <div class = "upload-block">
+                                <form method="POST" action="/upload/" enctype="multipart/form-data" id = "uploadForm">
+                                    <input type="file" name="file" id = "fileInput" onchange="handleFileUpload()">
+                                    <button type="button" onclick="handleSubmit()">Submit</button>
+                                </form>
+                                    <div class = "message-block">
+                                        <div id = "success_message" style="color:green"></div>
+                                        <div id = "failed_message" style="color:red"></div>
+                                        <br>
+                                    </div>
                             </div>
                         </div>
             </div>
@@ -122,37 +130,37 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-4 col-md-6 col-lg-4">
-                                <div class="single_case">
-                                        <div class="case_thumb">
-                                                <img src="img/case/1.png" alt="">
-                                            </div>
-                                    <div class="case_heading">
-                                            <span>Finance Solution</span>
-                                            <h3><a href="#">Consumer Products Consulting</a></h3>
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/acetylcho.png" alt="">
                                     </div>
-                                </div>
+                            <div class="case_heading">
+                                <span>Alzheimer's Disease</span>
+                                <h3><a href="/acetylcholinesterase/">Acetylcholinesterase</a></h3>
+                            </div>
+                        </div>
                         </div>
                         <div class="col-xl-4 col-md-6 col-lg-4">
-                                <div class="single_case">
-                                        <div class="case_thumb">
-                                                <img src="img/case/2.png" alt="">
-                                            </div>
-                                    <div class="case_heading">
-                                            <span>Finance Solution</span>
-                                            <h3><a href="#">Consumer Products Consulting</a></h3>
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/kdm4a.png" alt="">
                                     </div>
-                                </div>
+                            <div class="case_heading">
+                                <span>Cancer</span>
+                                    <h3><a href="/acetylcholinesterase/">Lysine Demethylase 4A</a></h3>
+                            </div>
+                        </div>
                         </div>
                         <div class="col-xl-4 col-md-6 col-lg-4">
-                                <div class="single_case">
-                                        <div class="case_thumb">
-                                                <img src="img/case/3.png" alt="">
-                                            </div>
-                                    <div class="case_heading">
-                                            <span>Finance Solution</span>
-                                            <h3><a href="#">Consumer Products Consulting</a></h3>
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/vegfr-2.png" alt="">
                                     </div>
-                                </div>
+                            <div class="case_heading">
+                                <span>Cancer</span>
+                                    <h3><a href="/acetylcholinesterase/">VEGF Receptor-2</a></h3>
+                            </div>
+                        </div>
                         </div>
                     </div>
         </div>
@@ -164,6 +172,71 @@
     <script src="/static/js/owl.carousel.min.js"></script>
     <script src="/static/js/jquery.slicknav.min.js"></script>
     <script src="/static/js/main.js"></script>
+    <script>
+        function handleFileUpload() {
+            //var fileInput = document.getElementById("fileInput");
+            var s_message = document.getElementById("success_message");
+            var f_message = document.getElementById("failed_message");
+            s_message.innerText = ""; // Clear the message when a new file is selected
+            f_message.innerText = "";
+          }
+    
+        function handleSubmit() {
+            var fileInput = document.getElementById("fileInput");
+            var s_message = document.getElementById("success_message");
+            var f_message = document.getElementById("failed_message");
+            if (fileInput.files.length === 0) {
+                f_message.innerText = "Please select a file before submitting.";
+                return;
+            }
+    
+            var filename = fileInput.files[0].name;
+            if (filename.length >= 4 && filename.substr(filename.length - 4)==='.txt') {
+                s_message.innerText = "File successfully uploaded! Computing, Please wait...";
+                f_message.innerText = "";
+                var data = document.getElementById('fileInput').files[0];
+                var fr = new FileReader();
+                fr.onload = function(e) {
+                    var fileContent = e.target.result;
+                    console.log(fileContent);
+                    sendFileContent(filename,fileContent);
+                };
+                fr.readAsText(data);
+
+            }
+            else{
+                s_message.innerText = "";
+                f_message.innerText = "Please upload a non-empty .txt file!";
+                return;
+            }
+        }
+    
+        function sendFileContent(filename, fileContent) {
+            var payload = {
+                filename: filename,
+                fileContent: fileContent
+            };
+        
+            fetch('/upload/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    window.location.href = '/results/';
+                } else {
+                    throw new Error('Error: ' + response.status);
+                }
+            })
+            .catch(function(error) {
+                console.log('Error:', error.message);
+            });
+        }
+    
+      </script>
 
 </body>
 

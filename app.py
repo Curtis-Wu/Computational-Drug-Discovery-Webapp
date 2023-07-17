@@ -10,7 +10,6 @@ app.secret_key = 'your-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 app.app_context().push()
-template_dir = os.path.abspath('/Users/curtiswu/Documents/Python files/Some self projects/Computational-Drug-Discovery-Webapp')
 
 @app.route('/')
 def index():
@@ -47,6 +46,7 @@ def upload_file():
     df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
     session['headings'] = list(df)
     session['data'] = df.values.tolist()
+    session['id'] = str(upload.id)
     return 'File successfully uploaded'
 
 @app.route('/compounds/')
@@ -54,17 +54,20 @@ def compounds():
     return render_template('compounds.html')
 
 
-# @app.route('/results/')
-# def results():
-#     headings = session.get('headings', [])
-#     data = session.get('data', [])
+@app.route('/results/')
+def results():
+    headings = session.get('headings', [])
+    data = session.get('data', [])
+    id = session.get('id',[])
     
-#     # Clear the session variables
-#     session.pop('headings', None)
-#     session.pop('data', None)
-    
-#     # Pass headings and data to the results template
-#     return render_template('results.html', headings=headings, data=data)
+    # Clear the session variables
+    session.pop('headings', None)
+    session.pop('data', None)
+    session.pop('id',None)
+
+    if id: file_download = "Download csv file here"
+    return render_template('results.html', headings=headings, data=data, id=id, file_download = file_download)
+
 
 @app.route('/method/')
 def methods():

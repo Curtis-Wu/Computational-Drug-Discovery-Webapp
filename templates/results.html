@@ -23,4 +23,160 @@
     <link rel="stylesheet" href="/static/css/slick.css">
     <link rel="stylesheet" href="/static/css/slicknav.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/acetylcho.css">
 </head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+    <header>
+        <div class="header-area ">
+            <div class="header-top_area d-none d-lg-block">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-md-5 ">
+                            <div class="header_left">
+                                <p>CADD Webapp by Curtis W.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-md-7">
+                            <div class="header_right d-flex">
+                                    <div class="short_contact_list">
+                                            <ul>
+                                                <li><a href="#"> <i class="fa fa-envelope"></i> eedeverdeen@gmail.com</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="social_media_links">
+                                            <a href="#">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sticky-header" class="main-header-area details_nav">
+                <div class="container">
+                    <div class="header_bottom_border">
+                        <div class="row align-items-center">
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="main-menu  d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a href="/">Home</a></li>
+                                            <li><a class="active" href="/compounds/">Target Compounds <i class="ti-angle-down"></i></a>
+                                                <ul class="submenu">
+                                                        <li><a href="/acetylcholinesterase/">Acetylcholinesterase</a></li>
+                                                        <li><a href="/acetylcholinesterase/">KDM4A</a></li>
+                                                        <li><a href="/acetylcholinesterase/">VEGF Receptor 2</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="/method/">Method</a></li>
+                                            <li><a href="/references/">References</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+    <div class="case_details_area">
+        <div class="container">
+            <div class="border_bottom">
+                    <div class="row ">
+                            <div class="col-xl-12">
+                                <div class="details_title">
+                                    <h3>Results</h3>
+                                </div>
+                            </div>
+                            <table class="table">
+                                <tr class="table_row">
+                                    {% for header in headings %}
+                                    <th class="table_cell">{{ header }}</th>
+                                    {% endfor %}
+                                </tr>
+                                {% for row in data %}
+                                <tr class="table_row">
+                                    {% for cell in row %}
+                                    <td class="table_cell">{{ cell }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            <div class = "download">
+                                <a href = "{{url_for('download_file',variable = id)}}" style="color:#084cdf">{{file_download}}</a>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- case_study_area  -->
+    <div class="case_study_area case_page">
+        <div class="container">
+                <div class="row">
+                        <div class="col-xl-12">
+                            <div class="section_title mb-40">
+                                <h3>Related Target Compounds</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/acetylcho.png" alt="">
+                                    </div>
+                            <div class="case_heading">
+                                <span>Alzheimer's Disease</span>
+                                <h3><a href="/acetylcholinesterase/">Acetylcholinesterase</a></h3>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/kdm4a.png" alt="">
+                                    </div>
+                            <div class="case_heading">
+                                <span>Cancer</span>
+                                    <h3><a href="/acetylcholinesterase/">Lysine Demethylase 4A</a></h3>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/vegfr-2.png" alt="">
+                                    </div>
+                            <div class="case_heading">
+                                <span>Cancer</span>
+                                    <h3><a href="/acetylcholinesterase/">VEGF Receptor-2</a></h3>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <!-- /case_study_area  -->
+
+
+    <!-- JS here -->
+    <script src="/static/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/jquery.slicknav.min.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
