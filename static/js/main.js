@@ -3,7 +3,7 @@
 // TOP Menu Sticky
 $(window).on('scroll', function () {
 	var scroll = $(window).scrollTop();
-	if (scroll < 150) {
+	if (scroll < 100) {
     $("#sticky-header").removeClass("sticky");
     $('#back-top').fadeIn(500);
 	} else {
@@ -35,11 +35,11 @@ $('.slider_active').owlCarousel({
   margin:0,
 items:1,
 autoplay:true,
+autoplayTimeout:3000,
 navText:['<i class="ti-angle-left"></i>','<i class="ti-angle-right"></i>'],
   nav:true,
 dots:false,
 autoplayHoverPause: true,
-autoplaySpeed: 800,
   responsive:{
       0:{
           items:1,
@@ -71,7 +71,6 @@ $('.case_active').owlCarousel({
   loop:true,
   margin:30,
 items:1,
-autoplay:false,
 navText:['<i class="ti-angle-left"></i>','<i class="ti-angle-right"></i>'],
   nav:true,
 dots:true,
