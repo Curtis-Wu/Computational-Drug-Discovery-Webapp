@@ -3,12 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from wtforms.validators import InputRequired
 import pandas as pd
 from utils import model_predict
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 app.app_context().push()
+template_dir = os.path.abspath('/Users/curtiswu/Documents/Python files/Some self projects/Computational-Drug-Discovery-Webapp')
 
 @app.route('/')
 def index():
@@ -47,18 +49,30 @@ def upload_file():
     session['data'] = df.values.tolist()
     return 'File successfully uploaded'
 
+@app.route('/compounds/')
+def compounds():
+    return render_template('compounds.html')
 
-@app.route('/results/')
-def results():
-    headings = session.get('headings', [])
-    data = session.get('data', [])
+
+# @app.route('/results/')
+# def results():
+#     headings = session.get('headings', [])
+#     data = session.get('data', [])
     
-    # Clear the session variables
-    session.pop('headings', None)
-    session.pop('data', None)
+#     # Clear the session variables
+#     session.pop('headings', None)
+#     session.pop('data', None)
     
-    # Pass headings and data to the results template
-    return render_template('results.html', headings=headings, data=data)
+#     # Pass headings and data to the results template
+#     return render_template('results.html', headings=headings, data=data)
+
+@app.route('/method/')
+def methods():
+    return render_template('method.html')
+
+@app.route('/references/')
+def references():
+    return render_template('references.html')
 
 
 if __name__=='__main__':
