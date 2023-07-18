@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from wtforms.validators import InputRequired
 import pandas as pd
 from utils import model_predict
-import os
+import os,io
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
@@ -29,10 +29,20 @@ def allowed_file(filename):
 def acetylcho():    
     return render_template('acetylcho.html')
 
+
 @app.route('/download/<variable>/')
 def download_file(variable):
-    file = 'models/acetylcholinesterase/data/user_data_'+str(variable)+'.csv'
-    return send_file(file,as_attachment=True)
+    file_path = 'models/acetylcholinesterase/data/'+str(variable)+'.csv'
+    
+    return_data = io.BytesIO()
+    with open(file_path, 'rb') as fo:
+        return_data.write(fo.read())
+    return_data.seek(0)
+
+    os.remove(file_path)
+
+    return send_file(return_data, mimetype='csv', as_attachment=True,download_name = file_path)
+
 
 @app.route('/upload/',methods = ['POST'])
 def upload_file():
@@ -43,11 +53,12 @@ def upload_file():
     upload = Upload(filename=filename,data = filecontent)
     db.session.add(upload)
     db.session.commit()
-    df.to_csv('models/acetylcholinesterase/data/user_data_'+str(upload.id)+'.csv',index=False)
+    df.to_csv('models/acetylcholinesterase/data/'+str(upload.id)+'.csv',index=False)
     session['headings'] = list(df)
     session['data'] = df.values.tolist()
     session['id'] = str(upload.id)
     return 'File successfully uploaded'
+
 
 @app.route('/compounds/')
 def compounds():
@@ -65,13 +76,13 @@ def results():
     session.pop('data', None)
     session.pop('id',None)
 
-    if id: file_download = "Download csv file here"
-    return render_template('results.html', headings=headings, data=data, id=id, file_download = file_download)
+    return render_template('results.html', headings=headings, data=data, id=id, file_download = "Download csv file here")
 
 
 @app.route('/method/')
 def methods():
     return render_template('method.html')
+
 
 @app.route('/references/')
 def references():
