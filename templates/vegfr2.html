@@ -227,10 +227,9 @@
             })
             .then(function(response) {
                 if (response.ok) {
-                    console.log('reached .then')
                     window.location.href = '/results/';
                 } else {
-                    throw new Error('Error: ' + response.status + ' ' + response.statusText + '\n' + JSON.stringify(response));
+                    throw new Error('Error: ' + response.status);
                 }
             })
             .catch(function(error) {

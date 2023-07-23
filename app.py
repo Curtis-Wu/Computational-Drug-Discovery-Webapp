@@ -1,7 +1,9 @@
 from flask import Flask,render_template,request,send_file,redirect,url_for,session
 from flask_sqlalchemy import SQLAlchemy
 from utils import model_predict
+import pandas as pd
 import os,io
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
@@ -44,7 +46,7 @@ def compounds():
     return render_template('compounds.html')
 
 
-
+    
 @app.route('/upload/',methods = ['POST'])
 def upload_file():
 
@@ -54,6 +56,7 @@ def upload_file():
     compound_name = data.get('compound_name')
     
     df = model_predict(compound_name,filecontent).sort_values('Predicted IC50 value (nM)')
+    df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
 
     if compound_name == "acetylcholinesterase":
         upload = mol_acetylcho(filename=filename,data = filecontent)
@@ -70,9 +73,8 @@ def upload_file():
     session['headings'] = list(df)
     session['data'] = df.values.tolist()
     session['id'] = str(upload.id)
-    session['name'] = str(compound_name)
-    
-    print("all working fine")
+    session['name'] = compound_name
+
     return "file successfully uploaded"
 
 
@@ -87,9 +89,12 @@ def results():
     session.pop('headings', None)
     session.pop('data', None)
     session.pop('id',None)
-        
+
     if name=="acetylcholinesterase": 
         name = "Acetylcholinesterase"
+    
+    elif name == "vegfr2":
+        name = "VEGF Receptor-2"
 
     return render_template('results.html', name=name,headings=headings, data=data, id=id, file_download = "Download csv file here")
 

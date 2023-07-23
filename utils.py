@@ -2,7 +2,6 @@ import pandas as pd
 import subprocess
 from chembl_webresource_client.new_client import new_client
 import pickle
-import keras
 from keras.models import load_model
 
 def model_predict(compound_name,compounds_str):
@@ -25,10 +24,9 @@ def model_predict(compound_name,compounds_str):
     features = pickle.load(open((filepath+"/data/selected_features.pkl"),"rb"))
     df = df[features]
     print(f"datafram is {df}")
-    df = df.to_numpy()
 
     if compound_name == 'vegfr2':
-        model = keras.models.load_model(filepath+'/data/my_model.h5')
+        model = load_model((filepath+'/data/my_model.h5'))
     else:
         model = pickle.load(open((filepath+"/data/trained_model.pkl"),"rb"))
 
@@ -37,7 +35,6 @@ def model_predict(compound_name,compounds_str):
     df1['Predicted IC50 value (nM)'] = b
 
     print(df1)
-    print(type(df1))
 
     return df1
 
