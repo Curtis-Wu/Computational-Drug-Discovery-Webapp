@@ -2,6 +2,8 @@ import pandas as pd
 import subprocess
 from chembl_webresource_client.new_client import new_client
 import pickle
+import keras
+from keras.models import load_model
 
 def model_predict(compound_name,compounds_str):
     compounds_list = list(compounds_str.split(' '))
@@ -11,25 +13,31 @@ def model_predict(compound_name,compounds_str):
     mols = molecule.filter(molecule_chembl_id__in=compounds_list).only(['molecule_chembl_id', 'molecule_structures'])
     for molecules in mols:
         my_res.append([molecules['molecule_structures']['canonical_smiles'],molecules['molecule_chembl_id']])
-
-
+    
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv('molecule.smi', sep='\t', index=False, header=False)
     filepath = 'models/'+compound_name
-    subprocess.run((filepath+'/padel.sh'), shell=True, check = True) 
+    subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
 
-    df = pd.read_csv(filepath+'/data/descriptors_output.csv')
+    df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
     
     df = df.drop(columns=['Name'])
-    
-    model = pickle.load(open((filepath+"/data/trained_model.pkl"),"rb"))
     features = pickle.load(open((filepath+"/data/selected_features.pkl"),"rb"))
     df = df[features]
     print(f"datafram is {df}")
-    y_predicted = model.predict(df)
+    df = df.to_numpy()
 
+    if compound_name == 'vegfr2':
+        model = keras.models.load_model(filepath+'/data/my_model.h5')
+    else:
+        model = pickle.load(open((filepath+"/data/trained_model.pkl"),"rb"))
+
+    y_predicted = model.predict(df)
     b = [pow(10,-value)*1000000000 for value in y_predicted]
     df1['Predicted IC50 value (nM)'] = b
+
+    print(df1)
+    print(type(df1))
 
     return df1
 

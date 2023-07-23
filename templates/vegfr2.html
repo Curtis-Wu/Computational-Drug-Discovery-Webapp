@@ -227,9 +227,10 @@
             })
             .then(function(response) {
                 if (response.ok) {
+                    console.log('reached .then')
                     window.location.href = '/results/';
                 } else {
-                    throw new Error('Error: ' + response.status);
+                    throw new Error('Error: ' + response.status + ' ' + response.statusText + '\n' + JSON.stringify(response));
                 }
             })
             .catch(function(error) {

@@ -1,7 +1,5 @@
 from flask import Flask,render_template,request,send_file,redirect,url_for,session
 from flask_sqlalchemy import SQLAlchemy
-from wtforms.validators import InputRequired
-import pandas as pd
 from utils import model_predict
 import os,io
 
@@ -68,12 +66,14 @@ def upload_file():
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/vegfr2/data/'+str(upload.id)+'.csv',index=False)
-        
+
     session['headings'] = list(df)
     session['data'] = df.values.tolist()
     session['id'] = str(upload.id)
-    session['name'] = compound_name
-    return 'File successfully uploaded'
+    session['name'] = str(compound_name)
+    
+    print("all working fine")
+    return "file successfully uploaded"
 
 
 @app.route('/results/')
