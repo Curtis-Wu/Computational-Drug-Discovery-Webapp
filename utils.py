@@ -16,7 +16,7 @@ def model_predict(compound_name,compounds_str):
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv('molecule.smi', sep='\t', index=False, header=False)
     filepath = 'models/'+compound_name
-    subprocess.run(filepath+'/padel.sh', shell=True, check = True) 
+    subprocess.run((filepath+'/padel.sh'), shell=True, check = True) 
 
     df = pd.read_csv(filepath+'/data/descriptors_output.csv')
     
