@@ -67,7 +67,7 @@
                                                 <ul class="submenu">
                                                         <li><a href="/acetylcholinesterase/">Acetylcholinesterase</a></li>
                                                         <li><a href="/acetylcholinesterase/">KDM4A</a></li>
-                                                        <li><a href="/acetylcholinesterase/">VEGF Receptor 2</a></li>
+                                                        <li><a href="/vegfr2/">VEGF Receptor 2</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="/method/">Method</a></li>
@@ -158,7 +158,7 @@
                                     </div>
                             <div class="case_heading">
                                 <span>Cancer</span>
-                                    <h3><a href="/acetylcholinesterase/">VEGF Receptor-2</a></h3>
+                                    <h3><a href="/vegfr2/">VEGF Receptor-2</a></h3>
                             </div>
                         </div>
                         </div>
@@ -214,7 +214,8 @@
         function sendFileContent(filename, fileContent) {
             var payload = {
                 filename: filename,
-                fileContent: fileContent
+                fileContent: fileContent,
+                compound_name: "acetylcholinesterase"
             };
         
             fetch('/upload/', {

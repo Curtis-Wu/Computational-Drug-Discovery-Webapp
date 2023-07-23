@@ -3,7 +3,7 @@ import subprocess
 from chembl_webresource_client.new_client import new_client
 import pickle
 
-def model_predict(compounds_str):
+def model_predict(compound_name,compounds_str):
     compounds_list = list(compounds_str.split(' '))
     print(f"compounds_list is {compounds_list}")
     molecule = new_client.molecule
@@ -15,13 +15,15 @@ def model_predict(compounds_str):
 
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv('molecule.smi', sep='\t', index=False, header=False)
-    subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
-    df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
+    filepath = 'models/'+compound_name
+    subprocess.run(filepath+'/padel.sh', shell=True, check = True) 
+
+    df = pd.read_csv(filepath+'/data/descriptors_output.csv')
     
     df = df.drop(columns=['Name'])
     
-    model = pickle.load(open("models/acetylcholinesterase/data/trained_model.pkl","rb"))
-    features = pickle.load(open("models/acetylcholinesterase/data/selected_features.pkl","rb"))
+    model = pickle.load(open((filepath+"/data/trained_model.pkl"),"rb"))
+    features = pickle.load(open((filepath+"/data/selected_features.pkl"),"rb"))
     df = df[features]
     print(f"datafram is {df}")
     y_predicted = model.predict(df)
