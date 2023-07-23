@@ -62,7 +62,7 @@ button:hover {
   text-align: center;
 }
 
-.download{
+/*.download{
   margin-top: 20px;
   margin-bottom: 15px;
   font-weight: bold;
@@ -70,5 +70,19 @@ button:hover {
   color:#084cdf;
   font-size: 20px;
   text-decoration-line: underline;
+}*/
+
+.download{
+  margin-top: 20px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  margin-left: 10px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 20px;
 }
 
