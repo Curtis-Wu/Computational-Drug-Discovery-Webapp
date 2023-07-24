@@ -106,26 +106,22 @@
 	<!-- Start Sample Area -->
 	<section class="sample-text-area">
 		<div class="container box_1170">
-			<h3 class="text-heading">Text Sample</h3>
+			<h3 class="text-heading">How to Use:</h3>
 			<p class="sample-text">
-				Every avid independent filmmaker has <b>Bold</b> about making that <i>Italic</i> interest documentary,
-				or short
-				film to show off their creative prowess. Many have great ideas and want to “wow”
-				the<sup>Superscript</sup> scene,
-				or video renters with their big project. But once you have the<sub>Subscript</sub> “in the can” (no easy
-				feat), how
-				do you move from a <del>Strike</del> through of master DVDs with the <u>“Underline”</u> marked
-				hand-written title
-				inside a secondhand CD case, to a pile of cardboard boxes full of shiny new, retail-ready DVDs, with UPC
-				barcodes
-				and polywrap sitting on your doorstep? You need to create eye-popping artwork and have your project
-				replicated.
-				Using a reputable full service DVD Replication company like PacificDisc, Inc. to partner with is
-				certainly a
-				helpful option to ensure a professional end result, but to help with your DVD replication project, here
-				are 4 easy
-				steps to follow for good DVD replication results:
-
+				To predict the IC50/EIC50/Potency value of potential drug molecules, first navigate to the 'Target Compounds' tab and select a desired target compound. Next, upload a text file containing all of the potential drug molecules. The web application will then generate a downloadable CSV file with the predicted values for each molecule. The compounds in the text file should be separated by spaces to allow for molecule identification. Invalid CHEMBL IDs will be ignored.
+				<br><br>
+			</p>
+			<h3 class="text-heading">Data Pre-processing</h3>
+			<p class="sample-text">
+				All raw data were obtained directly from the CHEMBL Database and pre-processed. This involved removing compounds with no recorded bioactivity and canonical smiles values, and converting the bioactivity values to a more usable scale using the logarithm operation. The PaDEL Descriptor was then used to calculate the molecular descriptors. To improve the quality of the dataset, features with low variance (σ<sup>2</sup> < 0.02) and high correlation (r > 0.8) were identified and removed from the dataset.<br><br>
+			</p>
+			<h3 class="text-heading">Model Training</h3>
+			<p class="sample-text">
+				For each target molecule, a variety of machine learning models with different parameters were compared, and the ones that demonstrated the best performance were selected. In particular, for acetylcholinesterase, LGBMRegressor outperformed over 40 other regressor models, as well as a feedforward artificial neural network that was tested with more than 50 different parameter combinations. It was observed that nearly every target molecule suffered from significant overfitting, and attempts to reduce the number of features using different variance or correlation thresholds yielded only marginal improvements in model performance. The artificial neural networks also exhibited a trend of better performance with fewer hidden layers, fewer nodes per layer, and a higher number of epochs and batch size.<br><br>
+			</p>
+			<h3 class="text-heading">Others</h3>
+			<p class="sample-text">
+				This webapp was built using flask. Some Javascripts were used to display the submission eligibility of the file dynamically, and also to handle url redirecting, file content reading and some animations. Contributions to add other target compounds are welcome.
 			</p>
 		</div>
 	</section>
