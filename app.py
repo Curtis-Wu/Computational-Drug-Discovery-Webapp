@@ -21,6 +21,12 @@ class mol_vegfr2(db.Model):
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
 
+class mol_bace1(db.Model):
+    id = db.Column(db.Integer,primary_key = True)
+    filename = db.Column(db.String(50))
+    data = db.Column(db.String)
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -41,12 +47,15 @@ def acetylcho():
 def vegfr2():    
     return render_template('vegfr2.html')
 
+@app.route('/bace1/')
+def bace1():
+    return render_template('bace1.html')
+
 @app.route('/compounds/')
 def compounds():
     return render_template('compounds.html')
 
 
-    
 @app.route('/upload/',methods = ['POST'])
 def upload_file():
 
@@ -69,6 +78,12 @@ def upload_file():
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/vegfr2/data/'+str(upload.id)+'.csv',index=False)
+
+    elif compound_name == "bace1":
+        upload = mol_bace1(filename=filename,data = filecontent)
+        db.session.add(upload)
+        db.session.commit()
+        df.to_csv('models/bace1/data/'+str(upload.id)+'.csv',index=False)
 
     session['headings'] = list(df)
     session['data'] = df.values.tolist()
@@ -95,6 +110,9 @@ def results():
     
     elif name == "vegfr2":
         name = "VEGF Receptor-2"
+
+    elif name == "bace1":
+        name = "Beta-Secretase 1"
 
     return render_template('results.html', name=name,headings=headings, data=data, id=id, file_download = "Download csv file here")
 
