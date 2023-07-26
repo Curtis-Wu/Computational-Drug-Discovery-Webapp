@@ -38,6 +38,23 @@ def model_predict(compound_name,compounds_str):
 
     return df1
 
+def create_model_instance(compound_name, filename=None, data=None):
+
+    from app import mol_acetylcho, mol_vegfr2, mol_bace1
+
+    model_map = {
+        "acetylcholinesterase": mol_acetylcho,
+        "vegfr2": mol_vegfr2,
+        "bace1": mol_bace1,
+    }
+
+    if compound_name not in model_map:
+        raise ValueError(f"Invalid compound name: {compound_name}")
+
+    model_class = model_map[compound_name]
+    upload = model_class(filename=filename, data=data)
+    return upload
+
 if __name__ == '__main__':
     # testing purpose
     my_str = "CHEMBL133897 CHEMBL336398 CHEMBL336398"

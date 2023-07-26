@@ -26,7 +26,6 @@ class mol_bace1(db.Model):
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -84,6 +83,11 @@ def upload_file():
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/bace1/data/'+str(upload.id)+'.csv',index=False)
+
+    # upload = create_model_instance(compound_name,filename,filecontent)
+    # db.sesison.add(upload)
+    # db.session.commit()
+    # df.to_csv('models/'+compound_name+'/data/'+str(upload.id)+'.csv',index=False)
 
     session['headings'] = list(df)
     session['data'] = df.values.tolist()
