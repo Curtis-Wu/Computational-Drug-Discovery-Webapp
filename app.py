@@ -26,6 +26,13 @@ class mol_bace1(db.Model):
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
 
+class mol_hiv1rt(db.Model):
+    id = db.Column(db.Integer,primary_key = True)
+    filename = db.Column(db.String(50))
+    data = db.Column(db.String)
+
+db.create_all()
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -50,9 +57,17 @@ def vegfr2():
 def bace1():
     return render_template('bace1.html')
 
+@app.route('/hiv1rt/')
+def hiv1rt():
+    return render_template('hiv1rt.html')
+
 @app.route('/compounds/')
 def compounds():
     return render_template('compounds.html')
+
+@app.route('/about/')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/upload/',methods = ['POST'])
@@ -83,6 +98,12 @@ def upload_file():
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/bace1/data/'+str(upload.id)+'.csv',index=False)
+
+    elif compound_name == "hiv1rt":
+        upload = mol_hiv1rt(filename=filename,data = filecontent)
+        db.session.add(upload)
+        db.session.commit()
+        df.to_csv('models/hiv1rt/data/'+str(upload.id)+'.csv',index=False)
 
     # upload = create_model_instance(compound_name,filename,filecontent)
     # db.sesison.add(upload)
@@ -117,6 +138,9 @@ def results():
 
     elif name == "bace1":
         name = "Beta-Secretase 1"
+    
+    elif name == "hiv1rt":
+        name = "HIV-1 RT"
 
     return render_template('results.html', name=name,headings=headings, data=data, id=id, file_download = "Download csv file here")
 

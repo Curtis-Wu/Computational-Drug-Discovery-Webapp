@@ -1,0 +1,246 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Computational Drug Discovery Webapp</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon">
+    
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/themify-icons.css">
+    <link rel="stylesheet" href="/static/css/nice-select.css">
+    <link rel="stylesheet" href="/static/css/flaticon.css">
+    <link rel="stylesheet" href="/static/css/gijgo.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/slick.css">
+    <link rel="stylesheet" href="/static/css/slicknav.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/acetylcho.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-area ">
+            <div class="header-top_area d-none d-lg-block">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-md-5 ">
+                            <div class="header_left">
+                                <p>CADD Webapp by Curtis W.</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-md-7">
+                            <div class="header_right d-flex">
+                                    <div class="short_contact_list">
+                                            <ul>
+                                                <li><a href="#"> <i class="fa fa-envelope"></i> eedeverdeen@gmail.com</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="social_media_links">
+                                            <a href="https://www.linkedin.com/in/curtiswu128">
+                                                <i class="fa fa-linkedin"></i>
+                                            </a>
+                                        </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sticky-header" class="main-header-area details_nav">
+                <div class="container">
+                    <div class="header_bottom_border">
+                        <div class="row align-items-center">
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="main-menu  d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a href="/">Home</a></li>
+                                            <li><a href="/compounds/">Target Compounds <i class="ti-angle-down"></i></a>
+                                                <ul class="submenu">
+                                                        <li><a href="/acetylcholinesterase/">Acetylcholinesterase</a></li>
+                                                        <li><a href="/bace1/">Beta-Secretase 1</a></li>
+                                                        <li><a href="/vegfr2/">VEGF Receptor 2</a></li>
+                                                        <li><a href="/hiv1rt/">HIV-1 RT</a></li>
+
+                                                </ul>
+                                            </li>
+                                            <li><a href="/method/">Method</a></li>
+                                            <li><a href="/references/">References</a></li>
+                                            <li><a class="active" href="/about/">About</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-end -->
+
+    <div class="case_details_area">
+        <div class="container">
+            <div class="border_bottom">
+                    <div class="row">
+                            <div class="col-xl-12">
+                                <div class="details_title">
+                                    <h3>About this Webapp</h3>
+                                </div>
+                            </div>
+                            <div class="col-xl-9">
+                                <div class="details_main_wrap">
+                                    <p class="details_info">
+                                        To predict the bioactivity value of potential drug molecules, first navigate to the 'Target Compounds' tab and select a desired target compound. Next, upload a text file containing all of the potential drug molecules. The compounds in the text file should be separated by spaces to allow for molecule identification. Invalid CHEMBL IDs will be ignored.
+                                        <br><br>
+                                        By utilizing machine learning algorithms, this web-application can predict the bioactivity of input drug compounds towards a specific drug target.
+                                        <br><br>
+                                        The web application will then generate a downloadable CSV file with the predicted values for each molecule sorted by bioactivities.
+                                        <br>
+                                        <div style = "font-size:18px; color:grey">IC50 (half maximal inhibitory concentration): is a measure of the concentration of a drug or compound required to inhibit 50% of the target activity. It is commonly used in pharmacology to evaluate drug potency and to compare different compounds. The lower the IC50 value, the more potent the drug or compound is considered to be.</div>
+                                        <br>
+                                        <div style = "font-size:18px; color:grey">Potency: is a measure of the amount of drug required to produce a specific therapeutic effect. The lower the potency value, the more potent the drug or compound is considered to be.</div>
+                                    </p>
+                                    <p class="details_info">
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="case_study_area case_page">
+        <div class="container">
+                <div class="row">
+                        <div class="col-xl-12">
+                            <div class="section_title mb-40">
+                                <h3>Related Target Compounds</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/acetylcho.png" alt="">
+                                    </div>
+                            <div class="case_heading">
+                                <span>Alzheimer's Disease</span>
+                                <h3><a href="/acetylcholinesterase/">Acetylcholinesterase</a></h3>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/bace1.png" alt="">
+                                    </div>
+                            <div class="case_heading">
+                                <span>Alzheimer's Disease</span>
+                                    <h3><a href="/bace1/">Beta-Secretase 1</a></h3>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="single_case">
+                                <div class="case_thumb">
+                                        <img src="/static/vegfr-2.png" alt="">
+                                    </div>
+                            <div class="case_heading">
+                                <span>Cancer</span>
+                                    <h3><a href="/vegfr2/">VEGF Receptor-2</a></h3>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <!-- /case_study_area  -->
+
+
+    <script src="/static/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <script src="/static/js/jquery.slicknav.min.js"></script>
+    <script src="/static/js/main.js"></script>
+    <script>
+        function handleFileUpload() {
+            //var fileInput = document.getElementById("fileInput");
+            var s_message = document.getElementById("success_message");
+            var f_message = document.getElementById("failed_message");
+            s_message.innerText = ""; // Clear the message when a new file is selected
+            f_message.innerText = "";
+          }
+    
+        function handleSubmit() {
+            var fileInput = document.getElementById("fileInput");
+            var s_message = document.getElementById("success_message");
+            var f_message = document.getElementById("failed_message");
+            if (fileInput.files.length === 0) {
+                f_message.innerText = "Please select a file before submitting.";
+                return;
+            }
+    
+            var filename = fileInput.files[0].name;
+            if (filename.length >= 4 && filename.substr(filename.length - 4)==='.txt') {
+                s_message.innerText = "File successfully uploaded! Computing, Please wait...";
+                f_message.innerText = "";
+                var data = document.getElementById('fileInput').files[0];
+                var fr = new FileReader();
+                fr.onload = function(e) {
+                    var fileContent = e.target.result;
+                    console.log(fileContent);
+                    sendFileContent(filename,fileContent);
+                };
+                fr.readAsText(data);
+
+            }
+            else{
+                s_message.innerText = "";
+                f_message.innerText = "Please upload a non-empty .txt file!";
+                return;
+            }
+        }
+    
+        function sendFileContent(filename, fileContent) {
+            var payload = {
+                filename: filename,
+                fileContent: fileContent,
+                compound_name: "acetylcholinesterase"
+            };
+        
+            fetch('/upload/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    window.location.href = '/results/';
+                } else {
+                    throw new Error('Error: ' + response.status);
+                }
+            })
+            .catch(function(error) {
+                console.log('Error:', error.message);
+            });
+        }
+    
+      </script>
+
+</body>
+
+</html>
