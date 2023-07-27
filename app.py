@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,send_file,redirect,url_for,session
+from flask import Flask,render_template,request,send_file,session
 from flask_sqlalchemy import SQLAlchemy
 from utils import model_predict
 import pandas as pd
@@ -80,7 +80,6 @@ def about():
 
 @app.route('/upload/',methods = ['POST'])
 def upload_file():
-
     data = request.json
     filecontent = data.get('fileContent')
     filename = data.get('filename')
@@ -88,44 +87,24 @@ def upload_file():
     
     df = model_predict(compound_name,filecontent).sort_values('Predicted IC50 value (nM)')
     df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
-    
-    if compound_name == "acetylcholinesterase":
-        upload = mol_acetylcho(filename=filename,data = filecontent)
+
+    def create_model_instance(compound_model, filename, filecontent, df):
+        upload = compound_model(filename=filename, data=filecontent)
         upload.results = json.dumps(df.values.tolist())
         upload.headings = json.dumps(list(df))
-        db.session.add(upload)
-        db.session.commit()
-        df.to_csv('models/acetylcholinesterase/data/'+str(upload.id)+'.csv',index=False)
+        return upload
 
-    elif compound_name == "vegfr2":
-        upload = mol_vegfr2(filename=filename,data = filecontent)
-        upload.results = json.dumps(df.values.tolist())
-        upload.headings = json.dumps(list(df))
-        db.session.add(upload)
-        db.session.commit()
-        df.to_csv('models/vegfr2/data/'+str(upload.id)+'.csv',index=False)
+    compound_models = {
+        "acetylcholinesterase": mol_acetylcho,
+        "vegfr2": mol_vegfr2,
+        "bace1":mol_bace1,
+        "hiv1rt":mol_hiv1rt,
+    }
 
-    elif compound_name == "bace1":
-        upload = mol_bace1(filename=filename,data = filecontent)
-        upload.results = json.dumps(df.values.tolist())
-        upload.headings = json.dumps(list(df))
-        db.session.add(upload)
-        db.session.commit()
-        df.to_csv('models/bace1/data/'+str(upload.id)+'.csv',index=False)
+    upload = create_model_instance(compound_models.get(compound_name), filename, filecontent, df)
 
-    elif compound_name == "hiv1rt":
-        upload = mol_hiv1rt(filename=filename,data = filecontent)
-        upload.results = json.dumps(df.values.tolist())
-        upload.headings = json.dumps(list(df))
-        db.session.add(upload)
-        db.session.commit()
-        df.to_csv('models/hiv1rt/data/'+str(upload.id)+'.csv',index=False)
-
-    # upload = create_model_instance(compound_name,filename,filecontent)
-    # db.sesison.add(upload)
-    # db.session.commit()
-    # df.to_csv('models/'+compound_name+'/data/'+str(upload.id)+'.csv',index=False)
-
+    db.session.add(upload)
+    db.session.commit()
     session['id'] = str(upload.id)
     session['name'] = compound_name
 
@@ -141,31 +120,30 @@ def results():
     id = session.get('id',[])
     name = session.get('name',[])
     
-    # Clear the session variables
-    session.pop('data', None)
     session.pop('id',None)
 
-    if name=="acetylcholinesterase": 
-        name = "Acetylcholinesterase"
-    
-    elif name == "vegfr2":
-        name = "VEGF Receptor-2"
+    names_list = {
+        "acetylcholinesterase":"Acetylcholinesterase",
+        "vegfr2":"VEGF Receptor-2",
+        "bace1":"Beta-Secretase 1",
+        "hiv1rt":"HIV-1 RT"
+    }
 
-    elif name == "bace1":
-        name = "Beta-Secretase 1"
-    
-    elif name == "hiv1rt":
-        name = "HIV-1 RT"
-
-    return render_template('results.html', name=name,headings=headings, data=data, id=id, file_download = "Download csv file here")
+    return render_template('results.html', name=names_list.get(name),headings=headings, data=data, id=id, file_download = "Download csv file here")
 
 
 @app.route('/download/<variable>/')
 def download_file(variable):
     name = session.get('name',[])
-    #upload = db.session.query(eval('mol_'+name)).filter_by(id=variable).first()
     session.pop('name',None)
+    
+    upload = db.session.query(eval('mol_'+name)).filter_by(id=variable).first()
+    headings = json.loads(upload.headings)
+    data = json.loads(upload.results)
+    df = pd.DataFrame(data=data, columns=headings)
+
     file_path = 'models/'+name+'/data/'+str(variable)+'.csv'
+    df.to_csv(file_path)
     
     return_data = io.BytesIO()
     with open(file_path, 'rb') as fo:
