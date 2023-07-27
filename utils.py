@@ -2,9 +2,11 @@ from chembl_webresource_client.new_client import new_client
 import pandas as pd
 import subprocess
 import pickle
+import uuid
+import os
 from keras.models import load_model
 
-def model_predict(compound_name,compounds_str):
+def model_predict(compound_name,compounds_str,id):
     compounds_list = list(compounds_str.split(' '))
     print(f"compounds_list is {compounds_list}")
     molecule = new_client.molecule
@@ -13,14 +15,22 @@ def model_predict(compound_name,compounds_str):
     for molecules in mols:
         my_res.append([molecules['molecule_structures']['canonical_smiles'],molecules['molecule_chembl_id']])
     
+    file_id = compound_name+'_'+id
+    filename = file_id + '.smi'
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
-    df1.to_csv('molecule.smi', sep='\t', index=False, header=False)
+    df1.to_csv(filename, sep='\t', index=False, header=False)
     filepath = 'models/'+compound_name
-
-    subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
-    df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
     
+    subprocess.run(f'models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
+    df = pd.read_csv(file_id+'_descriptors_output.csv')
+    #subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
+    #df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
+    os.remove(os.path.abspath(filename))
+    os.remove(os.path.abspath(file_id+'_descriptors_output.csv'))
+
+    print("successfully read df")
     df = df.drop(columns=['Name'])
+    print("successfully dropped column")
     features = pickle.load(open((filepath+"/data/selected_features.pkl"),"rb"))
     df = df[features]
     print(f"datafram is {df}")

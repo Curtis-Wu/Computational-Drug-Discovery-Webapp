@@ -84,15 +84,6 @@ def upload_file():
     filecontent = data.get('fileContent')
     filename = data.get('filename')
     compound_name = data.get('compound_name')
-    
-    df = model_predict(compound_name,filecontent).sort_values('Predicted IC50 value (nM)')
-    df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
-
-    def create_model_instance(compound_model, filename, filecontent, df):
-        upload = compound_model(filename=filename, data=filecontent)
-        upload.results = json.dumps(df.values.tolist())
-        upload.headings = json.dumps(list(df))
-        return upload
 
     compound_models = {
         "acetylcholinesterase": mol_acetylcho,
@@ -100,11 +91,18 @@ def upload_file():
         "bace1":mol_bace1,
         "hiv1rt":mol_hiv1rt,
     }
+    compounds_model = compound_models.get(compound_name)
+    upload = compounds_model(filename=filename, data=filecontent)
 
-    upload = create_model_instance(compound_models.get(compound_name), filename, filecontent, df)
+    df = model_predict(compound_name,filecontent,str(upload.id)).sort_values('Predicted IC50 value (nM)')
+    df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
+
+    upload.results = json.dumps(df.values.tolist())
+    upload.headings = json.dumps(list(df))
 
     db.session.add(upload)
     db.session.commit()
+    
     session['id'] = str(upload.id)
     session['name'] = compound_name
 
