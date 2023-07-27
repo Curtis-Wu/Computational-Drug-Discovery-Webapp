@@ -15,21 +15,29 @@ class mol_acetylcho(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
+    results = db.Column(db.String)  # new field for storing the results
+    headings = db.Column(db.String)
 
 class mol_vegfr2(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
+    results = db.Column(db.String)  # new field for storing the results
+    headings = db.Column(db.String)
 
 class mol_bace1(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
+    results = db.Column(db.String)  # new field for storing the results
+    headings = db.Column(db.String)
 
 class mol_hiv1rt(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
+    results = db.Column(db.String)  # new field for storing the results
+    headings = db.Column(db.String)
 
 db.create_all()
 
@@ -80,27 +88,35 @@ def upload_file():
     
     df = model_predict(compound_name,filecontent).sort_values('Predicted IC50 value (nM)')
     df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
-
+    
     if compound_name == "acetylcholinesterase":
         upload = mol_acetylcho(filename=filename,data = filecontent)
+        upload.results = json.dumps(df.values.tolist())
+        upload.headings = json.dumps(list(df))
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/acetylcholinesterase/data/'+str(upload.id)+'.csv',index=False)
 
     elif compound_name == "vegfr2":
         upload = mol_vegfr2(filename=filename,data = filecontent)
+        upload.results = json.dumps(df.values.tolist())
+        upload.headings = json.dumps(list(df))
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/vegfr2/data/'+str(upload.id)+'.csv',index=False)
 
     elif compound_name == "bace1":
         upload = mol_bace1(filename=filename,data = filecontent)
+        upload.results = json.dumps(df.values.tolist())
+        upload.headings = json.dumps(list(df))
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/bace1/data/'+str(upload.id)+'.csv',index=False)
 
     elif compound_name == "hiv1rt":
         upload = mol_hiv1rt(filename=filename,data = filecontent)
+        upload.results = json.dumps(df.values.tolist())
+        upload.headings = json.dumps(list(df))
         db.session.add(upload)
         db.session.commit()
         df.to_csv('models/hiv1rt/data/'+str(upload.id)+'.csv',index=False)
@@ -110,8 +126,6 @@ def upload_file():
     # db.session.commit()
     # df.to_csv('models/'+compound_name+'/data/'+str(upload.id)+'.csv',index=False)
 
-    session['headings'] = list(df)
-    session['data'] = df.values.tolist()
     session['id'] = str(upload.id)
     session['name'] = compound_name
 
@@ -120,13 +134,14 @@ def upload_file():
 
 @app.route('/results/')
 def results():
-    headings = session.get('headings', [])
-    data = session.get('data', [])
+    upload = db.session.query(eval('mol_'+session.get('name',[]))).filter_by(id=session.get('id',[])).first()
+
+    headings = json.loads(upload.headings)
+    data = json.loads(upload.results)
     id = session.get('id',[])
     name = session.get('name',[])
     
     # Clear the session variables
-    session.pop('headings', None)
     session.pop('data', None)
     session.pop('id',None)
 
@@ -148,8 +163,8 @@ def results():
 @app.route('/download/<variable>/')
 def download_file(variable):
     name = session.get('name',[])
+    #upload = db.session.query(eval('mol_'+name)).filter_by(id=variable).first()
     session.pop('name',None)
-
     file_path = 'models/'+name+'/data/'+str(variable)+'.csv'
     
     return_data = io.BytesIO()

@@ -16,8 +16,8 @@ def model_predict(compound_name,compounds_str):
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv('molecule.smi', sep='\t', index=False, header=False)
     filepath = 'models/'+compound_name
-    subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
 
+    subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
     df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
     
     df = df.drop(columns=['Name'])
@@ -38,22 +38,22 @@ def model_predict(compound_name,compounds_str):
 
     return df1
 
-def create_model_instance(compound_name, filename=None, data=None):
+# def create_model_instance(compound_name, filename=None, data=None):
 
-    from app import mol_acetylcho, mol_vegfr2, mol_bace1
+#     from app import mol_acetylcho, mol_vegfr2, mol_bace1
 
-    model_map = {
-        "acetylcholinesterase": mol_acetylcho,
-        "vegfr2": mol_vegfr2,
-        "bace1": mol_bace1,
-    }
+#     model_map = {
+#         "acetylcholinesterase": mol_acetylcho,
+#         "vegfr2": mol_vegfr2,
+#         "bace1": mol_bace1,
+#     }
 
-    if compound_name not in model_map:
-        raise ValueError(f"Invalid compound name: {compound_name}")
+#     if compound_name not in model_map:
+#         raise ValueError(f"Invalid compound name: {compound_name}")
 
-    model_class = model_map[compound_name]
-    upload = model_class(filename=filename, data=data)
-    return upload
+#     model_class = model_map[compound_name]
+#     upload = model_class(filename=filename, data=data)
+#     return upload
 
 if __name__ == '__main__':
     # testing purpose

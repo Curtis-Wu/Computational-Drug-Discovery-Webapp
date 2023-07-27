@@ -1,0 +1,6 @@
+Canonical Smiles,Molecule ChemBL ID,Predicted IC50 value (nM)
+O=C(O)CCc1c(/C=C2\C(=O)Nc3cc(-c4ccccc4)ccc32)[nH]c2c1CCCC2,CHEMBL88771,900.206
+O=C(N1CCCCC1)n1nc(-c2ccc(Cl)cc2)nc1SCC1CC1,CHEMBL336398,2859.474
+CCOc1nn(-c2cccc(OCc3ccccc3)c2)c(=O)o1,CHEMBL133897,3001.787
+O=C1Nc2ccc(C(=O)O)cc2/C1=C/c1cc2c([nH]1)CCCC2,CHEMBL89010,5898.115
+COc1ccc(-c2ccc3c(c2)NC(=O)/C3=C\c2cc3c([nH]2)CCCC3)cc1,CHEMBL313500,15444.658
