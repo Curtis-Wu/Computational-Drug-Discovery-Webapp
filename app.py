@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 app.app_context().push()
 
-class mol_acetylcho(db.Model):
+class mol_acetylcholinesterase(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
@@ -39,6 +39,7 @@ class mol_hiv1rt(db.Model):
     results = db.Column(db.String)  # new field for storing the results
     headings = db.Column(db.String)
 
+db.drop_all()
 db.create_all()
 
 @app.route('/')
@@ -86,7 +87,7 @@ def upload_file():
     compound_name = data.get('compound_name')
 
     compound_models = {
-        "acetylcholinesterase": mol_acetylcho,
+        "acetylcholinesterase": mol_acetylcholinesterase,
         "vegfr2": mol_vegfr2,
         "bace1":mol_bace1,
         "hiv1rt":mol_hiv1rt,

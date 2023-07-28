@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.png">
     
     <!-- CSS here -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -101,22 +101,21 @@
 	<!-- Start Sample Area -->
 	<section class="sample-text-area">
 		<div class="container box_1170">
-			<h3 class="text-heading">How to Use:</h3>
-			<p class="sample-text">
-				To predict the IC50/EIC50/Potency value of potential drug molecules, first navigate to the 'Target Compounds' tab and select a desired target compound. Next, upload a text file containing all of the potential drug molecules. The web application will then generate a downloadable CSV file with the predicted values for each molecule. The compounds in the text file should be separated by spaces to allow for molecule identification. Invalid CHEMBL IDs will be ignored.
-				<br><br>
-			</p>
 			<h3 class="text-heading">Data Pre-processing</h3>
 			<p class="sample-text">
-				All raw data were obtained directly from the CHEMBL Database and pre-processed. This involved removing compounds with no recorded bioactivity and canonical smiles values, and converting the bioactivity values to a more usable scale using the logarithm operation. The PaDEL Descriptor was then used to calculate the molecular descriptors. To improve the quality of the dataset, features with low variance (σ<sup>2</sup> < 0.02) and high correlation (r > 0.8) were identified and removed from the dataset. Some data points with abnormally low concentration values were also removed.<br><br>
+				All raw data were obtained directly from the CHEMBL Database and the bioactivity type with the highest number of recorded data points was selected for each target compound. As a result, the webapp is capable of predicting IC50 values for some compounds and potency values for others. Pre-processing of the data was performed, which involved removing compounds with no recorded bioactivity and canonical smiles values, and converting the bioactivity values to a more usable scale using the logarithm operation. The PaDEL Descriptor was then used to calculate the molecular descriptors. To improve the quality of the dataset, features with low variance (σ<sup>2</sup> < 0.02) and high correlation (r > 0.8) were identified and removed from the dataset. Some data points with abnormally low concentration values were also removed.<br><br>
 			</p>
 			<h3 class="text-heading">Model Training</h3>
 			<p class="sample-text">
-				For each target molecule, a variety of machine learning models with different parameters were compared, and the ones that demonstrated the best performance were selected. In particular, for acetylcholinesterase, LGBMRegressor outperformed over 40 other regressor models, as well as a feedforward artificial neural network that was tested with more than 50 different parameter combinations. It was observed that nearly every target molecule suffered from significant overfitting, and attempts to reduce the number of features using different variance or correlation thresholds yielded only marginal improvements in model performance. The artificial neural networks also exhibited a trend of better performance with fewer hidden layers, fewer nodes per layer, and a higher number of epochs.<br><br>
+				For each target molecule, a variety of machine learning models with different parameters were compared, and the ones that demonstrated the best performance were selected. And in general, regressor models such as HistGradientBoosting Regressor or LGBM Regressor were found to have the best performance. For example, for acetylcholinesterase, LGBMRegressor outperformed over 40 other regressor models, as well as a feedforward artificial neural network that was tested with more than 60 different parameter combinations. It was observed that many target molecules suffered from significant overfitting, and attempts to reduce the number of features using different variance or correlation thresholds yielded only marginal improvements in model performance. The artificial neural networks also exhibited a trend of better performance with fewer hidden layers, fewer nodes per layer, and a higher number of epochs for most target molecules.<br><br>
 			</p>
-			<h3 class="text-heading">Others</h3>
+			<h3 class="text-heading">IC50</h3>
 			<p class="sample-text">
-				This webapp was built using flask. Javascripts were used to display the submission eligibility of the file dynamically, and also to handle url redirecting, file content reading and some animations.
+				IC50 (half maximal inhibitory concentration) is a measure of the concentration of a drug or compound required to inhibit 50% of the target activity. It is commonly used in pharmacology to evaluate drug potency and to compare different compounds. The lower the IC50 value, the more potent the drug or compound is considered to be.<br><br>
+			</p>
+			<h3 class="text-heading">Potency</h3>
+			<p class="sample-text">
+				Potency is a pharmacological measure that quantifies the amount of a drug or compound required to produce a specific therapeutic effect. It is a critical parameter in drug discovery and development, as it reflects the strength of the drug or compound's biological activity. The lower the potency value, the more potent the drug or compound is considered to be.
 			</p>
 		</div>
 	</section>
