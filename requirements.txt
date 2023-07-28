@@ -3,5 +3,4 @@ Flask-SQLAlchemy
 gunicorn
 pandas
 chembl_webresource_client
-pickle5
 keras
