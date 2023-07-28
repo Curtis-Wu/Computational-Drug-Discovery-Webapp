@@ -94,28 +94,40 @@
             <div class="border_bottom">
                     <div class="row ">
                             <div class="col-xl-12">
+                                {% if session['valid_results'] %}
                                 <div class="details_title" style="display:flex">
                                     <h3>Results</h3>
                                     <div style="margin-top:22px;margin-left:10px;font-size:18px"> {{name}} </div>
                                 </div>
                             </div>
-                            <table class="table">
-                                <tr class="table_row">
-                                    {% for header in headings %}
-                                    <th class="table_cell">{{ header }}</th>
+                                <table class="table">
+                                    <tr class="table_row">
+                                        {% for header in headings %}
+                                        <th class="table_cell">{{ header }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                    {% for row in data %}
+                                    <tr class="table_row">
+                                        {% for cell in row %}
+                                        <td class="table_cell">{{ cell }}</td>
+                                        {% endfor %}
+                                    </tr>
                                     {% endfor %}
-                                </tr>
-                                {% for row in data %}
-                                <tr class="table_row">
-                                    {% for cell in row %}
-                                    <td class="table_cell">{{ cell }}</td>
-                                    {% endfor %}
-                                </tr>
-                                {% endfor %}
-                            </table>
-                            <div class = "download">
-                                <a href = "{{url_for('download_file',variable = id)}}" style="color: #fff;">{{file_download}}</a>
-                            </div>
+                                </table>
+                                <div class = "download">
+                                    <a href = "{{url_for('download_file',variable = id)}}" style="color: #fff;">{{file_download}}</a>
+                                </div>
+                            {% else %}
+                            <h1>No valid results! </h1>
+                            <p style="font-size:20px;">
+                                <br>
+                                Possible issues:<br>
+                                1. The submitted file is empty.<br>
+                                2. The session has expired.<br>
+                                3. The submitted file does not contain valid CHEMBL IDs.<br>
+                                4. The CHEMBL IDs in the submitted file are not separated by spaces.<br><br>
+                            </p>
+                            {% endif %}
                         </div>
             </div>
         </div>

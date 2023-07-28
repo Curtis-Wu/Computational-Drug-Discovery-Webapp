@@ -34,7 +34,10 @@ def model_predict(compound_name,compounds_str,id):
     features = pickle.load(open((filepath+"/data/selected_features.pkl"),"rb"))
     df = df[features]
     print(f"datafram is {df}")
-
+    
+    if df.empty:
+        return df
+    
     if compound_name == 'vegfr2':
         model = load_model((filepath+'/data/my_model.h5'))
     else:

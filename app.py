@@ -1,6 +1,5 @@
 from flask import Flask,render_template,request,send_file,session
 from flask_sqlalchemy import SQLAlchemy
-from utils import model_predict
 import pandas as pd
 import os,io
 import json
@@ -38,9 +37,6 @@ class mol_hiv1rt(db.Model):
     data = db.Column(db.String)
     results = db.Column(db.String)  # new field for storing the results
     headings = db.Column(db.String)
-
-db.drop_all()
-db.create_all()
 
 @app.route('/')
 def index():
@@ -85,6 +81,7 @@ def upload_file():
     filecontent = data.get('fileContent')
     filename = data.get('filename')
     compound_name = data.get('compound_name')
+    session['valid_results'] = True
 
     compound_models = {
         "acetylcholinesterase": mol_acetylcholinesterase,
@@ -94,12 +91,16 @@ def upload_file():
     }
     compounds_model = compound_models.get(compound_name)
     upload = compounds_model(filename=filename, data=filecontent)
-
-    df = model_predict(compound_name,filecontent,str(upload.id)).sort_values('Predicted IC50 value (nM)')
-    df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
-
-    upload.results = json.dumps(df.values.tolist())
-    upload.headings = json.dumps(list(df))
+    from utils import model_predict
+    df = model_predict(compound_name,filecontent,str(upload.id))
+    if df.empty:
+        upload.results = "Invalid"
+        upload.headings = "Invalid"
+        session['valid_results'] = False
+    else:
+        df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3).sort_values('Predicted IC50 value (nM)')
+        upload.results = json.dumps(df.values.tolist())
+        upload.headings = json.dumps(list(df))
 
     db.session.add(upload)
     db.session.commit()
@@ -112,14 +113,9 @@ def upload_file():
 
 @app.route('/results/')
 def results():
-    upload = db.session.query(eval('mol_'+session.get('name',[]))).filter_by(id=session.get('id',[])).first()
-
-    headings = json.loads(upload.headings)
-    data = json.loads(upload.results)
     id = session.get('id',[])
     name = session.get('name',[])
-    
-    session.pop('id',None)
+    upload = db.session.query(eval('mol_'+session.get('name',[]))).filter_by(id=id).first()
 
     names_list = {
         "acetylcholinesterase":"Acetylcholinesterase",
@@ -127,6 +123,15 @@ def results():
         "bace1":"Beta-Secretase 1",
         "hiv1rt":"HIV-1 RT"
     }
+    
+    if upload.results == "Invalid":
+        return render_template('results.html', name=names_list.get(name))
+    
+    headings = json.loads(upload.headings)
+    data = json.loads(upload.results)
+    
+    session.pop('id',None)
+    session.pop('valid_results',None)
 
     return render_template('results.html', name=names_list.get(name),headings=headings, data=data, id=id, file_download = "Download csv file here")
 

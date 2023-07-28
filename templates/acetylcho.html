@@ -184,7 +184,7 @@
             f_message.innerText = "";
           }
     
-        function handleSubmit() {
+          function handleSubmit() {
             var fileInput = document.getElementById("fileInput");
             var s_message = document.getElementById("success_message");
             var f_message = document.getElementById("failed_message");
@@ -192,26 +192,24 @@
                 f_message.innerText = "Please select a file before submitting.";
                 return;
             }
-    
-            var filename = fileInput.files[0].name;
-            if (filename.length >= 4 && filename.substr(filename.length - 4)==='.txt') {
-                s_message.innerText = "File successfully uploaded! Computing, Please wait...";
-                f_message.innerText = "";
-                var data = document.getElementById('fileInput').files[0];
-                var fr = new FileReader();
-                fr.onload = function(e) {
-                    var fileContent = e.target.result;
-                    console.log(fileContent);
-                    sendFileContent(filename,fileContent);
-                };
-                fr.readAsText(data);
-
-            }
-            else{
+        
+            var file = fileInput.files[0];
+            if (file.type !== "text/plain") {
                 s_message.innerText = "";
                 f_message.innerText = "Please upload a non-empty .txt file!";
                 return;
             }
+        
+            var filename = file.name;
+            s_message.innerText = "File successfully uploaded! Computing, Please wait...";
+            f_message.innerText = "";
+            var fr = new FileReader();
+            fr.onload = function(e) {
+                var fileContent = e.target.result;
+                console.log(fileContent);
+                sendFileContent(filename,fileContent);
+            };
+            fr.readAsText(file);
         }
     
         function sendFileContent(filename, fileContent) {

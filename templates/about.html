@@ -93,6 +93,9 @@
                             </div>
                             <div class="col-xl-9">
                                 <div class="details_main_wrap">
+                                    <div style = "color:red;font-weight:bold;">
+                                        <br>Important: Bioactivity predictions depends on the access to the <a href = "https://www.ebi.ac.uk/chembl/api/data/docs" style = "underline" target="_blank"> <u>CHEMBL Database API</u></a> which at times could be unstable due to CHEMBL Database server issues. So if the prediction webpage is not redirecting after a long time it's likely due to server issues. You can try to refresh the page or retry in a while.
+                                    </div>
                                     <p class="details_info">
                                         To predict the bioactivity value of potential drug molecules, first navigate to the 'Target Compounds' tab and select a desired target compound. Next, upload a text file containing all of the potential drug molecules. The compounds in the text file should be separated by spaces to allow for molecule identification. Invalid CHEMBL IDs will be ignored.
                                         <br><br>
@@ -100,10 +103,9 @@
                                         <br><br>
                                         The web application will then generate a downloadable CSV file with the predicted values for each molecule sorted by bioactivities.
                                         <br>
-                                        <div style = "font-size:18px; color:grey">This webapp was built using flask. Javascripts were used to display the submission eligibility of the file dynamically, and also to handle url redirecting, file content reading and some animations. More features or functions will be added in the future such as computing the Lipinski's Rule of 5 for input molecules, and also more available target compounds.</div>
-                                    </p>
-                                    <p class="details_info">
-
+                                        <div style = "font-size:18px; color:grey;margin-bottom:20px">
+                                            This webapp was built using flask. Javascripts were used to display the submission eligibility of the file dynamically, and also to handle url redirecting, file content reading and some animations. More features or functions will be added in the future such as computing the Lipinski's Rule of 5 for input molecules, and also more available target compounds.
+                                        </div>
                                     </p>
                                 </div>
                             </div>
@@ -165,73 +167,6 @@
     <script src="/static/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="/static/js/jquery.slicknav.min.js"></script>
     <script src="/static/js/main.js"></script>
-    
-    <script>
-        function handleFileUpload() {
-            //var fileInput = document.getElementById("fileInput");
-            var s_message = document.getElementById("success_message");
-            var f_message = document.getElementById("failed_message");
-            s_message.innerText = ""; // Clear the message when a new file is selected
-            f_message.innerText = "";
-          }
-    
-        function handleSubmit() {
-            var fileInput = document.getElementById("fileInput");
-            var s_message = document.getElementById("success_message");
-            var f_message = document.getElementById("failed_message");
-            if (fileInput.files.length === 0) {
-                f_message.innerText = "Please select a file before submitting.";
-                return;
-            }
-    
-            var filename = fileInput.files[0].name;
-            if (filename.length >= 4 && filename.substr(filename.length - 4)==='.txt') {
-                s_message.innerText = "File successfully uploaded! Computing, Please wait...";
-                f_message.innerText = "";
-                var data = document.getElementById('fileInput').files[0];
-                var fr = new FileReader();
-                fr.onload = function(e) {
-                    var fileContent = e.target.result;
-                    console.log(fileContent);
-                    sendFileContent(filename,fileContent);
-                };
-                fr.readAsText(data);
-
-            }
-            else{
-                s_message.innerText = "";
-                f_message.innerText = "Please upload a non-empty .txt file!";
-                return;
-            }
-        }
-    
-        function sendFileContent(filename, fileContent) {
-            var payload = {
-                filename: filename,
-                fileContent: fileContent,
-                compound_name: "acetylcholinesterase"
-            };
-        
-            fetch('/upload/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(function(response) {
-                if (response.ok) {
-                    window.location.href = '/results/';
-                } else {
-                    throw new Error('Error: ' + response.status);
-                }
-            })
-            .catch(function(error) {
-                console.log('Error:', error.message);
-            });
-        }
-    
-      </script>
 
 </body>
 
