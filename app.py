@@ -81,7 +81,7 @@ def upload_file():
     filecontent = data.get('fileContent')
     filename = data.get('filename')
     compound_name = data.get('compound_name')
-    session['valid_results'] = True
+    session['valid'] = True
 
     compound_models = {
         "acetylcholinesterase": mol_acetylcholinesterase,
@@ -96,7 +96,7 @@ def upload_file():
     if df.empty:
         upload.results = "Invalid"
         upload.headings = "Invalid"
-        session['valid_results'] = False
+        session['valid'] = False
     else:
         df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
         df = df.sort_values('Predicted IC50 value (nM)')
@@ -114,9 +114,11 @@ def upload_file():
 
 @app.route('/results/')
 def results():
+    print('results function called')
     id = session.get('id',[])
     name = session.get('name',[])
-    upload = db.session.query(eval('mol_'+session.get('name',[]))).filter_by(id=id).first()
+    flag = session.get('valid',[])
+    upload = db.session.query(eval('mol_'+name)).filter_by(id=id).first()
 
     names_list = {
         "acetylcholinesterase":"Acetylcholinesterase",
@@ -125,22 +127,21 @@ def results():
         "hiv1rt":"HIV-1 RT"
     }
     
-    if upload.results == "Invalid":
-        return render_template('results.html', name=names_list.get(name))
+    if not flag:
+        return render_template('results.html', flag = flag)
     
     headings = json.loads(upload.headings)
     data = json.loads(upload.results)
     
     session.pop('id',None)
-    session.pop('valid_results',None)
 
-    return render_template('results.html', name=names_list.get(name),headings=headings, data=data, id=id, file_download = "Download csv file here")
+    return render_template('results.html', name=names_list.get(name),headings=headings, data=data, id=id, file_download = "Download csv file here",flag = flag)
 
 
 @app.route('/download/<variable>/')
 def download_file(variable):
     name = session.get('name',[])
-    session.pop('name',None)
+    session.clear()
     
     upload = db.session.query(eval('mol_'+name)).filter_by(id=variable).first()
     headings = json.loads(upload.headings)
@@ -160,4 +161,4 @@ def download_file(variable):
 
 
 if __name__=='__main__':
-    app.run(debug=False)
+    app.run(debug=True)

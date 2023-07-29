@@ -94,10 +94,12 @@
             <div class="border_bottom">
                     <div class="row ">
                             <div class="col-xl-12">
-                                {% if session['valid_results'] %}
+                            {%if flag%}
                                 <div class="details_title" style="display:flex">
                                     <h3>Results</h3>
-                                    <div style="margin-top:22px;margin-left:10px;font-size:18px"> {{name}} </div>
+                                    <div style="margin-top:22px;margin-left:10px;font-size:18px"> 
+                                        {{name}} 
+                                    </div>
                                 </div>
                             </div>
                                 <table class="table">
