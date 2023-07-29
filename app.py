@@ -98,7 +98,8 @@ def upload_file():
         upload.headings = "Invalid"
         session['valid_results'] = False
     else:
-        df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3).sort_values('Predicted IC50 value (nM)')
+        df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
+        df = df.sort_values('Predicted IC50 value (nM)')
         upload.results = json.dumps(df.values.tolist())
         upload.headings = json.dumps(list(df))
 
