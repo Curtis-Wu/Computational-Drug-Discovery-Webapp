@@ -4,6 +4,7 @@ import subprocess
 import pickle
 import os
 from keras.models import load_model
+from flask import current_app
 
 def model_predict(compound_name,compounds_str,id):
     compounds_list = list(compounds_str.split(' '))
@@ -13,7 +14,9 @@ def model_predict(compound_name,compounds_str,id):
     mols = molecule.filter(molecule_chembl_id__in=compounds_list).only(['molecule_chembl_id', 'molecule_structures'])
     for molecules in mols:
         my_res.append([molecules['molecule_structures']['canonical_smiles'],molecules['molecule_chembl_id']])
-    
+
+    current_app.logger.info('successfully retrieved data from web')
+
     file_id = compound_name+'_'+id
     filename = file_id + '.smi'
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
@@ -26,6 +29,7 @@ def model_predict(compound_name,compounds_str,id):
     #df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
     os.remove(os.path.abspath(filename))
     os.remove(os.path.abspath(file_id+'_descriptors_output.csv'))
+    current_app.logger.info('successfully computed descriptors')
 
     print("successfully read df")
     df = df.drop(columns=['Name'])

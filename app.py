@@ -85,6 +85,8 @@ def upload_file():
     compound_name = data.get('compound_name')
     session['valid'] = True
 
+    app.logger.info('successfully read the file content in upload block')
+
     compound_models = {
         "acetylcholinesterase": mol_acetylcholinesterase,
         "vegfr2": mol_vegfr2,
@@ -95,6 +97,8 @@ def upload_file():
     upload = compounds_model(filename=filename, data=filecontent)
     from utils import model_predict
     df = model_predict(compound_name,filecontent,str(upload.id))
+    app.logger.info('successfully retrieved df from model_predict')
+
     if df.empty:
         upload.results = "Invalid"
         upload.headings = "Invalid"
@@ -110,6 +114,7 @@ def upload_file():
     
     session['id'] = str(upload.id)
     session['name'] = compound_name
+    app.logger.info('file successfully uploaded')
 
     return "file successfully uploaded"
 
