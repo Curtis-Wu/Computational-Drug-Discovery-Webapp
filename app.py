@@ -38,6 +38,8 @@ class mol_hiv1rt(db.Model):
     results = db.Column(db.String)  # new field for storing the results
     headings = db.Column(db.String)
 
+db.create_all()
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -161,4 +163,4 @@ def download_file(variable):
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    app.run(debug=False)
