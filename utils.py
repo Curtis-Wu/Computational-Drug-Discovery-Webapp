@@ -24,7 +24,7 @@ def model_predict(compound_name,compounds_str,id):
     df1.to_csv(filename, sep='\t', index=False, header=False)
     filepath = 'models/'+compound_name
     
-    subprocess.run(f'models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
+    subprocess.run(f'/models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
     df = pd.read_csv(file_id+'_descriptors_output.csv')
     #subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
     #df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
