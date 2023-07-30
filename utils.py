@@ -15,7 +15,6 @@ def model_predict(compound_name,compounds_str,id):
     for molecules in mols:
         my_res.append([molecules['molecule_structures']['canonical_smiles'],molecules['molecule_chembl_id']])
 
-    current_app.logger.info('successfully retrieved data from web')
     
     file_id = compound_name+'_'+id
     print(f"file_id is {file_id}")
@@ -23,15 +22,14 @@ def model_predict(compound_name,compounds_str,id):
     print(f"file_name is {filename}")
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv(filename, sep='\t', index=False, header=False)
-    filepath = '/models/'+compound_name
+    filepath = 'models/'+compound_name
     
-    subprocess.run(f'/models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
+    subprocess.run(f'models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
     df = pd.read_csv(file_id+'_descriptors_output.csv')
     #subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
     #df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
     os.remove(os.path.abspath(filename))
     os.remove(os.path.abspath(file_id+'_descriptors_output.csv'))
-    current_app.logger.info('successfully computed descriptors')
 
     print("successfully read df")
     df = df.drop(columns=['Name'])

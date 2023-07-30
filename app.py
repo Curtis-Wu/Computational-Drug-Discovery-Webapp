@@ -14,31 +14,30 @@ class mol_acetylcholinesterase(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
-    results = db.Column(db.String)  # new field for storing the results
+    results = db.Column(db.String) 
     headings = db.Column(db.String)
 
 class mol_vegfr2(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
-    results = db.Column(db.String)  # new field for storing the results
+    results = db.Column(db.String)  
     headings = db.Column(db.String)
 
 class mol_bace1(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
-    results = db.Column(db.String)  # new field for storing the results
+    results = db.Column(db.String) 
     headings = db.Column(db.String)
 
 class mol_hiv1rt(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     filename = db.Column(db.String(50))
     data = db.Column(db.String)
-    results = db.Column(db.String)  # new field for storing the results
+    results = db.Column(db.String)  
     headings = db.Column(db.String)
 
-db.create_all()
 
 @app.route('/')
 def index():
@@ -96,23 +95,28 @@ def upload_file():
         "bace1":mol_bace1,
         "hiv1rt":mol_hiv1rt,
     }
-    compounds_model = compound_models.get(compound_name)
+    compounds_model = compound_models[compound_name]
     upload = compounds_model(filename=filename, data=filecontent)
+
+    db.session.add(upload)
+    db.session.commit()
+
     from utils import model_predict
     print(str(upload.id))
     print(upload.filename)
     print(upload.data)
     df = model_predict(compound_name,filecontent,str(upload.id))
 
+    record = compounds_model.query.get(upload.id)
     if df.empty:
-        upload.results = "Invalid"
-        upload.headings = "Invalid"
+        record.results = "Invalid"
+        record.headings = "Invalid"
         session['valid'] = False
     else:
         df['Predicted IC50 value (nM)'] = df['Predicted IC50 value (nM)'].astype('float64').round(3)
         df = df.sort_values('Predicted IC50 value (nM)')
-        upload.results = json.dumps(df.values.tolist())
-        upload.headings = json.dumps(list(df))
+        record.results = json.dumps(df.values.tolist())
+        record.headings = json.dumps(list(df))
 
     db.session.add(upload)
     db.session.commit()
