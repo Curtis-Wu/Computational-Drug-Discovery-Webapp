@@ -23,7 +23,7 @@ def model_predict(compound_name,compounds_str,id):
     print(f"file_name is {filename}")
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv(filename, sep='\t', index=False, header=False)
-    filepath = 'models/'+compound_name
+    filepath = '/models/'+compound_name
     
     subprocess.run(f'/models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
     df = pd.read_csv(file_id+'_descriptors_output.csv')
