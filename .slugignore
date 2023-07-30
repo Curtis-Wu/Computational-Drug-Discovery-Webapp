@@ -1,1 +1,10 @@
 *.ipynb
+pytz
+tzdata
+typing-extensions
+termcolor
+python-dateutil
+tensorflow-estimator
+tensorboard-data-server
+google-pasta
+tensorboard
