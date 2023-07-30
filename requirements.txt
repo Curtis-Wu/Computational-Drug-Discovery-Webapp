@@ -4,4 +4,4 @@ gunicorn
 pandas
 chembl_webresource_client
 keras
-tensorflow
+tensorflow-cpu
