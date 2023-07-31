@@ -4,7 +4,6 @@ import subprocess
 import pickle
 import os
 from keras.models import load_model
-from flask import current_app
 
 def model_predict(compound_name,compounds_str,id):
     compounds_list = list(compounds_str.split(' '))
