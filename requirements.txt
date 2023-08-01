@@ -5,3 +5,5 @@ pandas
 chembl_webresource_client
 keras
 tensorflow-cpu
+scikit-learn
+lightgbm
