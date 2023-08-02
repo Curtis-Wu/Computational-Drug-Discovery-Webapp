@@ -93,8 +93,9 @@
                             </div>
                             <div class="col-xl-9">
                                 <div class="details_main_wrap">
-                                    <div style = "color:red;font-weight:bold;">
-                                        <br>Important: Bioactivity predictions depend on the access to the <a href = "https://www.ebi.ac.uk/chembl/api/data/docs" style = "underline" target="_blank"> <u>CHEMBL DATABASE API</u></a> which at times could be unstable due to CHEMBL Database server issues. So if the prediction webpage is not redirecting after a long time it's likely due to server issues. You can try to refresh the page or retry in a while.
+                                    <div style = "color:red;font-weight:bold;font-size:20px">
+                                        <br><i>Important: Bioactivity prediction depends on the access to the <a href = "https://www.ebi.ac.uk/chembl/api/data/docs" style = "underline" target="_blank"> <u>CHEMBL DATABASE API</u></a> which at times could be unstable due to CHEMBL database server issues. Please check for connectivity before computing.<br>
+                                        If the API is not experiencing lag issues, computing time will fluctuate between 2-5 seconds for each valid CHEMBL ID depending on the target compound.</i>
                                     </div>
                                     <p class="details_info">
                                         To predict the bioactivity value of potential drug molecules, first navigate to the 'Target Compounds' tab and select a desired target compound. Next, upload a text file containing all of the potential drug molecules. The compounds in the text file should be separated by spaces to allow for molecule identification. Invalid CHEMBL IDs will be ignored.
@@ -104,7 +105,7 @@
                                         The web application will then generate a downloadable CSV file with the predicted values for each molecule sorted by bioactivities.
                                         <br>
                                         <div style = "font-size:18px; color:grey;margin-bottom:20px">
-                                            This webapp was built using flask. Javascripts were used to display the submission eligibility of the file dynamically, and also to handle url redirecting, file content reading and some animations. More features or functions will be added in the future such as computing the Lipinski's Rule of 5 for input molecules, and also more available target compounds.
+                                            This web application was developed using the Flask framework. To facilitate dynamic presentation of submission eligibility for files, JavaScript was employed. It also manages URL redirection, file content interpretation, and animation effects. The web application's capabilities would be expanded in the future by incorporating features such as calculation of Lipinski's Rule of Five for input molecules and an expanded list of target compounds.                                        
                                         </div>
                                     </p>
                                 </div>
