@@ -104,6 +104,12 @@
 	<!-- Start Sample Area -->
 	<section class="sample-text-area">
 		<div class="container box_1170">
+			<h3 class="text-heading">Computing Process</h3>
+			<p class="sample-text">
+				When a user uploads a file, an initial validation is performed by JavaScript to confirm the eligibility of the file type and facilitate the content reading process. The resulting data is then transmitted to a Python function, where a connection is established with the ChEMBL Database API. This allows for the extraction of canonical smiles corresponding to the submitted ChEMBL IDs.<br><br>
+				Subsequently, a Java shell subprocess is executed to compute the PaDEL descriptors for the valid molecules. The data is then subjected to parameter reduction, which utilizes features identified during the data pre-processing phase. This optimizes the data for the final step, which is the application of a pre-saved model to predict the outcome from the PaDEL descriptors.<br><br>
+				The processed results are promptly displayed to the user. For an in-depth understanding of the methods used for URL redirection, data value validation, and session value transmission, please refer to the <a href = "https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp"><u>github repository</u></a>. <br><br>
+			</p>
 			<h3 class="text-heading">Data Pre-processing</h3>
 			<p class="sample-text">
 				All raw data were obtained directly from the CHEMBL Database and the bioactivity type with the highest number of recorded data points was selected for each target compound. As a result, the webapp is capable of predicting IC50 values for some compounds and potency values for others. Pre-processing of the data was performed, which involved removing compounds with no recorded bioactivity and canonical smiles values, and converting the bioactivity values to a more usable scale using the logarithm operation. The PaDEL Descriptor was then used to calculate the molecular descriptors. To improve the quality of the dataset, features with low variance (σ<sup>2</sup> < 0.02) and high correlation (r > 0.8) were identified and removed from the dataset. Some data points with abnormally low concentration values were also removed.<br><br>
