@@ -1,6 +1,7 @@
 from chembl_webresource_client.new_client import new_client
 import pandas as pd
 import subprocess
+import lightgbm as lgb
 import pickle
 import os
 from keras.models import load_model
@@ -42,8 +43,10 @@ def model_predict(compound_name,compounds_str,id):
     
     if compound_name == 'vegfr2':
         model = load_model((filepath+'/data/my_model.h5'))
-    else:
+    elif compound_name == "hiv1rt":
         model = pickle.load(open((filepath+"/data/trained_model.pkl"),"rb"))
+    else:
+        model = lgb.Booster(model_file=filepath+'data/trained_model.txt')
 
     y_predicted = model.predict(df)
     b = [pow(10,-value)*1000000000 for value in y_predicted]
