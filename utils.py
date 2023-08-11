@@ -46,7 +46,7 @@ def model_predict(compound_name,compounds_str,id):
     elif compound_name == "hiv1rt":
         model = pickle.load(open((filepath+"/data/trained_model.pkl"),"rb"))
     else:
-        model = lgb.Booster(model_file=filepath+'data/trained_model.txt')
+        model = lgb.Booster(model_file=filepath+'/data/trained_model.txt')
 
     y_predicted = model.predict(df)
     b = [pow(10,-value)*1000000000 for value in y_predicted]
