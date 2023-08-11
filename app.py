@@ -84,10 +84,10 @@ def upload_file():
     compound_name = data.get('compound_name')
     session['valid'] = True
 
-    print(data)
-    print(filecontent)
-    print(filename)
-    print(compound_name)
+    # print(data)
+    # print(filecontent)
+    # print(filename)
+    # print(compound_name)
 
     compound_models = {
         "acetylcholinesterase": mol_acetylcholinesterase,
@@ -102,9 +102,9 @@ def upload_file():
     db.session.commit()
 
     from utils import model_predict
-    print(str(upload.id))
-    print(upload.filename)
-    print(upload.data)
+    # print(str(upload.id))
+    # print(upload.filename)
+    # print(upload.data)
     df = model_predict(compound_name,filecontent,str(upload.id))
 
     record = compounds_model.query.get(upload.id)

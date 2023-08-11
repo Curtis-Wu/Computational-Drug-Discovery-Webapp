@@ -8,7 +8,7 @@ from keras.models import load_model
 
 def model_predict(compound_name,compounds_str,id):
     compounds_list = list(compounds_str.split(' '))
-    print(f"compounds_list is {compounds_list}")
+    #print(f"compounds_list is {compounds_list}")
     molecule = new_client.molecule
     my_res = []
     mols = molecule.filter(molecule_chembl_id__in=compounds_list).only(['molecule_chembl_id', 'molecule_structures'])
@@ -17,26 +17,24 @@ def model_predict(compound_name,compounds_str,id):
 
     
     file_id = compound_name+'_'+id
-    print(f"file_id is {file_id}")
+    #print(f"file_id is {file_id}")
     filename = file_id + '.smi'
-    print(f"file_name is {filename}")
+    #print(f"file_name is {filename}")
     df1 = pd.DataFrame(my_res,columns = ['Canonical Smiles','Molecule ChemBL ID'])
     df1.to_csv(filename, sep='\t', index=False, header=False)
     filepath = 'models/'+compound_name
     
     subprocess.run(f'models/acetylcholinesterase/padel.sh {filename}', shell=True, check=True)
     df = pd.read_csv(file_id+'_descriptors_output.csv')
-    #subprocess.run('models/acetylcholinesterase/padel.sh', shell=True, check = True) 
-    #df = pd.read_csv('models/acetylcholinesterase/data/descriptors_output.csv')
     os.remove(os.path.abspath(filename))
     os.remove(os.path.abspath(file_id+'_descriptors_output.csv'))
 
-    print("successfully read df")
+    #print("successfully read df")
     df = df.drop(columns=['Name'])
-    print("successfully dropped column")
+    #print("successfully dropped column")
     features = pickle.load(open((filepath+"/data/selected_features.pkl"),"rb"))
     df = df[features]
-    print(f"datafram is {df}")
+    #print(f"datafram is {df}")
     
     if df.empty:
         return df
@@ -52,7 +50,7 @@ def model_predict(compound_name,compounds_str,id):
     b = [pow(10,-value)*1000000000 for value in y_predicted]
     df1['Predicted IC50 value (nM)'] = b
 
-    print(df1)
+    #print(df1)
 
     return df1
 
