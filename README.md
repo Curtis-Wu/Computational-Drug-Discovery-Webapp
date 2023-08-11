@@ -3,11 +3,14 @@ https://caddwebapp-599606695832.herokuapp.com/
 
 A lightweight and user-friendly web application that enables users to select a target compound/protein and upload a .txt file containing the CHEMBL IDs of potential drug molecules. The web-app leverages pre-trained machine learning models to provide predictions for the bioactivities of the drug molecules towards the chosen target compound. Once processed, the results are readily displayed and can be downloaded in a .csv file format for further analysis and exploration.
 
-![image](https://github.com/arimelf/Computational-Drug-Discovery-Webapp/assets/132332761/3c313b0e-f22d-4c03-8b94-ee6b180e2fdf)
+<img width="578" alt="image" src="https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp/assets/132332761/8f499606-6997-4958-b9a4-1185a255e2d0">
 
-![image](https://github.com/arimelf/Computational-Drug-Discovery-Webapp/assets/132332761/7cb3fc2f-4a5b-4f80-a841-c6da883dff53)
+<img width="583" alt="image" src="https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp/assets/132332761/0f94e2d0-78c2-41c7-9a29-1c682abc0fbe">
 
-![image](https://github.com/arimelf/Computational-Drug-Discovery-Webapp/assets/132332761/d8c38971-5d51-4561-b997-20abb5864f20)
+<img width="399" alt="image" src="https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp/assets/132332761/74c9d86f-d19b-4c7d-b140-5c14da120a68">
 
-![image](https://github.com/arimelf/Computational-Drug-Discovery-Webapp/assets/132332761/5c9fb09c-6b6c-47a1-ab6e-023e429e6d37)
+<img width="579" alt="image" src="https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp/assets/132332761/f57ed85b-e458-455f-9397-b457ff3eed06">
 
+<img width="579" alt="image" src="https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp/assets/132332761/1e3cd23a-32d7-42f2-9a6b-c16fe27f6046">
+
+<img width="576" alt="image" src="https://github.com/Curtis-Wu/Computational-Drug-Discovery-Webapp/assets/132332761/8f51e63a-e9b8-41ff-9475-8204b107bddd">
